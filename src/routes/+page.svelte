@@ -1,2 +1,7 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+	import FileExplorer from './FileExplorer.svelte';
+</script>
+
+<main class="bg-neutral-700 text-neutral-300 w-screen h-screen flex">
+	<FileExplorer />
+</main>
