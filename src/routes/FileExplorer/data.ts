@@ -1,7 +1,7 @@
 export type TFolder = {
 	folder: FileSystemDirectoryHandle;
-	subfolders: Array<TFolder>;
-	subfiles: Array<TFile>;
+	subfolders: TFolder[];
+	subfiles: TFile[];
 	expanded: boolean;
 };
 
