@@ -7,6 +7,7 @@
 
 <button
 	on:click={() => (folder.expanded = !folder.expanded)}
+	title={folder.name}
 	class="flex items-center w-full text-sm transition rounded-sm hover:text-white hover:bg-neutral-700"
 >
 	<img
