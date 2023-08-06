@@ -1,53 +1,47 @@
 export type TFolder = {
-	name: string;
-	kind: 'file' | 'folder';
+	folder: FileSystemDirectoryHandle;
+	subfolders: Array<TFolder>;
+	subfiles: Array<TFile>;
 	expanded: boolean;
-	subfiles: Array<TFolder>;
 };
 
-async function readSubfiles(dirHandle: FileSystemDirectoryHandle): Promise<TFolder['subfiles']> {
+export type TFile = {
+	file: FileSystemFileHandle;
+};
+
+async function readFolder(dirHandle: FileSystemDirectoryHandle): Promise<TFolder> {
+	const subfolders: TFolder['subfolders'] = [];
 	const subfiles: TFolder['subfiles'] = [];
 
 	for await (const entry of dirHandle.values()) {
 		if (entry.kind === 'directory') {
-			subfiles.push({
-				name: entry.name,
-				kind: 'folder',
-				expanded: false,
-				subfiles: await readSubfiles(entry)
+			const children = await readFolder(entry);
+
+			subfolders.push({
+				...children,
+				expanded: false
 			});
 		} else {
-			subfiles.push({
-				name: entry.name,
-				kind: 'file',
-				expanded: false,
-				subfiles: []
-			});
+			subfiles.push({ file: entry });
 		}
 	}
 
 	// sort alphabetically
-	subfiles.sort((a, b) => a.name.localeCompare(b.name));
+	subfiles.sort((a, b) => a.file.name.localeCompare(b.file.name));
+	subfolders.sort((a, b) => a.folder.name.localeCompare(b.folder.name));
 
-	// sort folders before files
-	subfiles.sort((a, b) => {
-		if (a.kind === 'folder' && b.kind === 'file') return -1;
-		if (a.kind === 'file' && b.kind === 'folder') return 1;
-		return 0;
-	});
-
-	return subfiles;
+	return {
+		folder: dirHandle,
+		subfiles,
+		subfolders,
+		expanded: false
+	};
 }
 
 export async function openFolder(): Promise<TFolder> {
 	const dirHandle = await window.showDirectoryPicker();
 
-	return {
-		name: dirHandle.name,
-		kind: 'folder',
-		expanded: true,
-		subfiles: await readSubfiles(dirHandle)
-	};
+	return readFolder(dirHandle);
 }
 
 const FILE_EXTENSIONS = [

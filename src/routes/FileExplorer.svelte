@@ -6,6 +6,7 @@
 
 	async function handleOpenFolder() {
 		rootFolder = await openFolder();
+		rootFolder.expanded = true;
 	}
 </script>
 
