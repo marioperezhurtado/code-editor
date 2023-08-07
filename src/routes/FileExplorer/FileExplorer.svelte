@@ -10,7 +10,9 @@
 	}
 </script>
 
-<aside class="h-screen p-2 overflow-y-auto border-r w-52 bg-neutral-800 border-neutral-600">
+<aside
+	class="h-screen p-2 overflow-y-auto border-r bg-neutral-800 border-neutral-600 min-w-[13rem] w-52"
+>
 	<h1 class="mb-3 text-xs">EXPLORER</h1>
 	{#if rootFolder}
 		<Folder folder={rootFolder} />
