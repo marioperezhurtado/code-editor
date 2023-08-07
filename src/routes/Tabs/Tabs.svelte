@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { selectedFile } from './stores';
-	import { getFileIcon } from './FileExplorer/data';
+	import FilePath from './FilePath.svelte';
+	import { selectedFile } from '../stores';
+	import { getFileIcon } from '$lib/file';
 
 	$: icon = getFileIcon($selectedFile?.file.file.name ?? '');
 </script>
@@ -44,3 +45,4 @@
 		</li>
 	{/if}
 </ul>
+<FilePath {icon} />

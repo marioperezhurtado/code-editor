@@ -1,6 +1,6 @@
 <script lang="ts">
 	import File from './File.svelte';
-	import type { TFolder } from './data';
+	import type { TFolder } from '$lib/folder';
 
 	export let folder: TFolder;
 </script>

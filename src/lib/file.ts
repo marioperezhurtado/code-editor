@@ -1,47 +1,34 @@
-export type TFolder = {
-	folder: FileSystemDirectoryHandle;
-	subfolders: TFolder[];
-	subfiles: TFile[];
-	expanded: boolean;
-};
-
 export type TFile = {
 	file: FileSystemFileHandle;
 };
 
-async function readFolder(dirHandle: FileSystemDirectoryHandle): Promise<TFolder> {
-	const subfolders: TFolder['subfolders'] = [];
-	const subfiles: TFolder['subfiles'] = [];
-
-	for await (const entry of dirHandle.values()) {
-		if (entry.kind === 'directory') {
-			const children = await readFolder(entry);
-
-			subfolders.push({
-				...children,
-				expanded: false
-			});
-		} else {
-			subfiles.push({ file: entry });
-		}
-	}
-
-	// sort alphabetically
-	subfiles.sort((a, b) => a.file.name.localeCompare(b.file.name));
-	subfolders.sort((a, b) => a.folder.name.localeCompare(b.folder.name));
-
-	return {
-		folder: dirHandle,
-		subfiles,
-		subfolders,
-		expanded: false
-	};
+export function getFileExtension(fileName: string): string {
+	return fileName.slice(fileName.lastIndexOf('.') + 1);
+}
+export async function getFileUrl(file: FileSystemFileHandle): Promise<string> {
+	const fileResult = await file.getFile();
+	return URL.createObjectURL(fileResult);
 }
 
-export async function openFolder(): Promise<TFolder> {
-	const dirHandle = await window.showDirectoryPicker();
+export async function readFile(fileHandle: FileSystemFileHandle): Promise<string> {
+	const file = await fileHandle.getFile();
+	return file.text();
+}
 
-	return readFolder(dirHandle);
+export function getFileIcon(filename: string): string {
+	const fileIcon = FILE_EXTENSIONS.find((ext) => filename.includes(ext.extension));
+
+	return fileIcon?.icon ?? 'unknown';
+}
+
+export async function resolvePath(
+	file: FileSystemFileHandle,
+	folder: FileSystemDirectoryHandle
+): Promise<Array<string>> {
+	if (!file) return [];
+
+	const path = await folder.resolve(file);
+	return path ?? [];
 }
 
 const FILE_EXTENSIONS = [
@@ -88,9 +75,3 @@ const FILE_EXTENSIONS = [
 	{ extension: '.ts', icon: 'ts' },
 	{ extension: '.md', icon: 'md' }
 ];
-
-export function getFileIcon(filename: string): string {
-	const fileIcon = FILE_EXTENSIONS.find((ext) => filename.includes(ext.extension));
-
-	return fileIcon?.icon ?? 'unknown';
-}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getFileIcon, type TFile } from './data';
+	import { getFileIcon, type TFile } from '$lib/file';
 	import { selectedFile } from '../stores';
 
 	export let file: TFile;
