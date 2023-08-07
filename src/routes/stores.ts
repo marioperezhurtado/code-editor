@@ -1,10 +1,6 @@
 import { writable } from 'svelte/store';
+import { readFile } from '$lib/files';
 import type { TFile } from './FileExplorer/data';
-
-async function readFile(fileHandle: FileSystemFileHandle): Promise<string> {
-	const file = await fileHandle.getFile();
-	return file.text();
-}
 
 type SelectedFile = {
 	file: TFile;
@@ -16,6 +12,7 @@ function createSelectedFile() {
 
 	return {
 		subscribe,
+		set,
 		open: async (file: TFile) => {
 			const content = await readFile(file.file);
 			set({ file, content });

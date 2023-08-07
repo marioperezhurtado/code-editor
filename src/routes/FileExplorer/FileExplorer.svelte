@@ -10,9 +10,7 @@
 	}
 </script>
 
-<aside
-	class="h-screen p-2 overflow-y-auto border-r bg-neutral-800 border-neutral-600 min-w-[13rem] w-52"
->
+<aside class="h-screen p-2 overflow-y-auto border-r bg-dark-2 border-dark-3 min-w-[13rem] w-52">
 	<h1 class="mb-3 text-xs">EXPLORER</h1>
 	{#if rootFolder}
 		<Folder folder={rootFolder} />
@@ -20,7 +18,7 @@
 		<p class="text-sm">No folder opened</p>
 		<button
 			on:click={handleOpenFolder}
-			class="block w-full p-1 mt-3 text-sm bg-purple-500 rounded-sm text-purple-50"
+			class="block w-full p-1 mt-3 text-sm rounded-sm bg-accent text-light"
 		>
 			Open folder
 		</button>

@@ -8,7 +8,7 @@
 <button
 	on:click={() => (folder.expanded = !folder.expanded)}
 	title={folder.folder.name}
-	class="flex items-center w-full text-sm transition rounded-sm hover:text-white hover:bg-neutral-700"
+	class="flex items-center w-full text-sm transition rounded-sm hover:text-white hover:bg-dark-3"
 >
 	<img
 		src="/icons/right-angle.svg"
@@ -28,7 +28,7 @@
 </button>
 
 {#if folder.expanded}
-	<ul class="pl-2 ml-2 text-sm border-l border-neutral-600">
+	<ul class="pl-2 ml-2 text-sm border-l border-dark-3">
 		{#each folder.subfolders as subfolder}
 			<li>
 				<svelte:self folder={subfolder} />

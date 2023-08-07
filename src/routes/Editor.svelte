@@ -1,19 +1,15 @@
 <script lang="ts">
 	import { selectedFile } from './stores';
+	import { getFileExtension, getFileUrl } from '$lib/files';
 
 	$: fileName = $selectedFile?.file.file.name;
-	$: fileExtension = fileName?.slice(fileName.lastIndexOf('.') + 1);
+	$: fileExtension = getFileExtension(fileName ?? '');
 
 	const IMAGE_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
 	const VIDEO_EXTENSIONS = ['mp4', 'webm', 'ogg'];
 
 	$: isImage = IMAGE_EXTENSIONS.includes(fileExtension ?? '');
 	$: isVideo = VIDEO_EXTENSIONS.includes(fileExtension ?? '');
-
-	const getFileUrl = async (file: FileSystemFileHandle) => {
-		const fileResult = await file.getFile();
-		return fileResult && URL.createObjectURL(fileResult);
-	};
 </script>
 
 <section class="w-full p-4 overflow-y-auto">
@@ -33,9 +29,37 @@
 				</div>
 			{/await}
 		{:else}
-			<p class="whitespace-pre-wrap">{$selectedFile.content}</p>
+			<div
+				class="h-full whitespace-pre-wrap outline-none"
+				bind:innerText={$selectedFile.content}
+				contenteditable
+			/>
 		{/if}
 	{:else}
-		<p>No file selected</p>
+		<div class="mx-auto mt-32 w-fit">
+			<h2 class="mb-5 text-xl font-bold text-white">
+				Welcome to <span class="text-accent">Code Editor</span>
+			</h2>
+			<ul class="flex flex-col gap-2">
+				<li>
+					<button>
+						Open folder
+						<span class="text-sm text-light-2">(Ctrl + O)</span>
+					</button>
+				</li>
+				<li>
+					<button>
+						Create file
+						<span class="text-sm text-light-2">(Ctrl + N)</span>
+					</button>
+				</li>
+				<li>
+					<button>
+						Search file
+						<span class="text-sm text-light-2">(Ctrl + F)</span>
+					</button>
+				</li>
+			</ul>
+		</div>
 	{/if}
 </section>
