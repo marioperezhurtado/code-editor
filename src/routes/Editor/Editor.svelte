@@ -30,11 +30,19 @@
 				</div>
 			{/await}
 		{:else}
-			<div
-				class="h-full whitespace-pre-wrap outline-none"
-				bind:innerText={$selectedFile.content}
-				contenteditable
-			/>
+			<div class="flex gap-6 text-sm">
+				<p class="text-right text-dark-3">
+					{#each Array.from({ length: $selectedFile.content.split('\n').length }, (_, i) => i + 1) as line}
+						{line}
+						<br />
+					{/each}
+				</p>
+				<p
+					class="whitespace-pre-wrap outline-none"
+					bind:innerText={$selectedFile.content}
+					contenteditable
+				/>
+			</div>
 		{/if}
 	{:else}
 		<WelcomeScreen />

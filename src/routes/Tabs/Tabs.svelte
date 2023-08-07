@@ -41,8 +41,10 @@
 					</g>
 				</svg>
 			</span>
-			<span class="overflow-hidden whitespace-nowrap text-ellipsis">Welcome!</span>
+			<span>Welcome!</span>
 		</li>
 	{/if}
 </ul>
-<FilePath {icon} />
+{#if $selectedFile}
+	<FilePath {icon} />
+{/if}

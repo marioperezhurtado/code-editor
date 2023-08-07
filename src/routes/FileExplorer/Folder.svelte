@@ -28,7 +28,7 @@
 </button>
 
 {#if folder.expanded}
-	<ul class="pl-2 ml-2 text-sm border-l border-dark-3">
+	<ul class="pl-1.5 ml-2 text-sm border-l border-dark-3">
 		{#each folder.subfolders as subfolder}
 			<li>
 				<svelte:self folder={subfolder} />
