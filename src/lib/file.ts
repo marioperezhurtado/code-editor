@@ -1,3 +1,5 @@
+import type { TFolder } from './folder';
+
 export type TFile = {
 	file: FileSystemFileHandle;
 };
@@ -29,6 +31,26 @@ export async function resolvePath(
 
 	const path = await folder.resolve(file);
 	return path ?? [];
+}
+
+export async function deleteFile(folder: TFolder, file: TFile): Promise<void> {
+	const paths = await resolvePath(file.file, folder.folder);
+	if (!paths) return;
+
+	// find file
+	let currentFolder = folder;
+
+	for (const path of paths) {
+		if (!path.includes('.')) {
+			// we have to go deeper
+			const subfolder = currentFolder?.subfolders.find((f) => f.folder.name === path);
+			if (subfolder) currentFolder = subfolder;
+		} else {
+			// we are at the file's folder
+			currentFolder.subfiles = currentFolder.subfiles.filter((f) => f.file.name !== path);
+			await currentFolder.folder.removeEntry(path);
+		}
+	}
 }
 
 const FILE_EXTENSIONS = [

@@ -38,7 +38,7 @@
 					{/each}
 				</p>
 				<p
-					class="whitespace-pre-wrap outline-none"
+					class="font-mono whitespace-pre-wrap outline-none"
 					bind:innerText={$selectedFile.content}
 					contenteditable
 				/>
