@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { selectedFile, rootFolder } from '../stores';
-	import { resolvePath } from '$lib/file';
+	import { resolvePathToFile } from '$lib/file';
 
 	export let icon: string;
 
@@ -8,7 +8,7 @@
 
 	$: {
 		if ($selectedFile && $rootFolder) {
-			resolvePath($selectedFile.file.file, $rootFolder?.folder).then((path) => {
+			resolvePathToFile($rootFolder?.folder, $selectedFile.file.file).then((path) => {
 				filePath = [$rootFolder?.folder.name ?? 'root', ...path];
 			});
 		}

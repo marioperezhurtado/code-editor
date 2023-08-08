@@ -1,27 +1,24 @@
 <script lang="ts">
 	import { rootFolder } from '../stores';
-	import type { TFile } from '$lib/file';
+	import type { TFolder } from '$lib/folder';
 	import ContextMenu from '$lib/components/ContextMenu/ContextMenu.svelte';
 	import ContextMenuItem from '$lib/components/ContextMenu/ContextMenuItem.svelte';
 	import ContextMenuSeparator from '$lib/components/ContextMenu/ContextMenuSeparator.svelte';
 
-	export let file: TFile;
+	export let folder: TFolder;
 	export let isOpen: boolean;
 
 	async function handleDelete() {
 		if (!$rootFolder?.folder) return;
 
-		await rootFolder.deleteFile(file);
+		await rootFolder.deleteFolder(folder);
 		isOpen = false;
 	}
 </script>
 
 <ContextMenu bind:isOpen>
-	<ContextMenuItem title="Cut" command="X" action={handleDelete} />
-	<ContextMenuItem title="Copy" command="C" action={handleDelete} />
+	<ContextMenuItem title="Move to..." command="M" action={handleDelete} />
 
-	<ContextMenuSeparator />
-	<ContextMenuItem title="Download" action={handleDelete} />
 	<ContextMenuSeparator />
 
 	<ContextMenuItem title="Rename" command="R" action={handleDelete} />

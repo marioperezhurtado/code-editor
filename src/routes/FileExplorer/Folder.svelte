@@ -1,12 +1,16 @@
 <script lang="ts">
 	import File from './File.svelte';
+	import FolderActions from './FolderActions.svelte';
 	import type { TFolder } from '$lib/folder';
 
 	export let folder: TFolder;
+
+	let actionsOpen = false;
 </script>
 
 <button
 	on:click={() => (folder.expanded = !folder.expanded)}
+	on:contextmenu={() => (actionsOpen = !actionsOpen)}
 	title={folder.folder.name}
 	class="flex items-center w-full text-sm transition rounded-sm hover:text-white hover:bg-dark-3"
 >
@@ -26,6 +30,10 @@
 		{folder.folder.name}
 	</span>
 </button>
+
+{#if actionsOpen}
+	<FolderActions {folder} bind:isOpen={actionsOpen} />
+{/if}
 
 {#if folder.expanded}
 	<ul class="pl-1.5 ml-2 text-sm border-l border-dark-3">

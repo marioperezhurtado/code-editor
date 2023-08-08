@@ -23,9 +23,9 @@ export function getFileIcon(filename: string): string {
 	return fileIcon?.icon ?? 'unknown';
 }
 
-export async function resolvePath(
-	file: FileSystemFileHandle,
-	folder: FileSystemDirectoryHandle
+export async function resolvePathToFile(
+	folder: FileSystemDirectoryHandle,
+	file: FileSystemFileHandle
 ): Promise<Array<string>> {
 	if (!file) return [];
 
@@ -34,23 +34,22 @@ export async function resolvePath(
 }
 
 export async function deleteFile(folder: TFolder, file: TFile): Promise<void> {
-	const paths = await resolvePath(file.file, folder.folder);
+	const paths = await resolvePathToFile(folder.folder, file.file);
 	if (!paths) return;
 
 	// find file
 	let currentFolder = folder;
 
-	for (const path of paths) {
-		if (!path.includes('.')) {
-			// we have to go deeper
-			const subfolder = currentFolder?.subfolders.find((f) => f.folder.name === path);
-			if (subfolder) currentFolder = subfolder;
-		} else {
-			// we are at the file's folder
-			currentFolder.subfiles = currentFolder.subfiles.filter((f) => f.file.name !== path);
-			await currentFolder.folder.removeEntry(path);
-		}
+	for (let i = 0; i < paths.length - 1; i++) {
+		const subfolder = currentFolder?.subfolders.find((f) => f.folder.name === paths[i]);
+		if (subfolder) currentFolder = subfolder;
 	}
+
+	const path_to_remove = paths.at(-1);
+	if (!path_to_remove) return;
+
+	currentFolder.subfiles = currentFolder.subfiles.filter((f) => f.file.name !== path_to_remove);
+	await currentFolder.folder.removeEntry(path_to_remove);
 }
 
 const FILE_EXTENSIONS = [
