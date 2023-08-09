@@ -7,6 +7,7 @@ export type TFile = {
 export function getFileExtension(fileName: string): string {
 	return fileName.slice(fileName.lastIndexOf('.') + 1);
 }
+
 export async function getFileUrl(file: FileSystemFileHandle): Promise<string> {
 	const fileResult = await file.getFile();
 	return URL.createObjectURL(fileResult);
@@ -50,6 +51,17 @@ export async function deleteFile(folder: TFolder, file: TFile): Promise<void> {
 
 	currentFolder.subfiles = currentFolder.subfiles.filter((f) => f.file.name !== path_to_remove);
 	await currentFolder.folder.removeEntry(path_to_remove);
+}
+
+export async function downloadFile(file: FileSystemFileHandle): Promise<void> {
+	const blob = await file.getFile();
+	const url = URL.createObjectURL(blob);
+	const a = document.createElement('a');
+	a.href = url;
+	a.download = file.name;
+	document.body.appendChild(a);
+	a.click();
+	a.remove();
 }
 
 const FILE_EXTENSIONS = [

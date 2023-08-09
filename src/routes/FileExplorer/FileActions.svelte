@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { rootFolder } from '../stores';
-	import type { TFile } from '$lib/file';
+	import { downloadFile, type TFile } from '$lib/file';
 	import ContextMenu from '$lib/components/ContextMenu/ContextMenu.svelte';
 	import ContextMenuItem from '$lib/components/ContextMenu/ContextMenuItem.svelte';
 	import ContextMenuSeparator from '$lib/components/ContextMenu/ContextMenuSeparator.svelte';
@@ -17,6 +17,11 @@
 		await rootFolder.deleteFile(file);
 		isOpen = false;
 	}
+
+	async function handleDownload() {
+		await downloadFile(file.file);
+		isOpen = false;
+	}
 </script>
 
 <ContextMenu bind:isOpen>
@@ -24,7 +29,7 @@
 	<ContextMenuItem title="Copy" command="C" action={handleDelete} />
 
 	<ContextMenuSeparator />
-	<ContextMenuItem title="Download" action={handleDelete} />
+	<ContextMenuItem title="Download" action={handleDownload} />
 	<ContextMenuSeparator />
 
 	<ContextMenuItem title="Rename" command="R" action={handleDelete} />
