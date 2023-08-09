@@ -37,12 +37,12 @@ export async function readFolder(dirHandle: FileSystemDirectoryHandle): Promise<
 }
 
 export async function resolvePathToFolder(
-	origin_folder: FileSystemDirectoryHandle,
-	folder_to_resolve: FileSystemDirectoryHandle
+	originFolder: FileSystemDirectoryHandle,
+	folderToResolve: FileSystemDirectoryHandle
 ): Promise<Array<string>> {
-	if (!origin_folder) return [];
+	if (!originFolder) return [];
 
-	const path = await origin_folder.resolve(folder_to_resolve);
+	const path = await originFolder.resolve(folderToResolve);
 	return path ?? [];
 }
 
@@ -58,12 +58,10 @@ export async function deleteFolder(rootFolder: TFolder, folder: TFolder): Promis
 		if (subfolder) currentFolder = subfolder;
 	}
 
-	const path_to_remove = paths.at(-1);
-	if (!path_to_remove) return;
+	const pathToRemove = paths.at(-1);
+	if (!pathToRemove) return;
 
-	currentFolder.subfolders = currentFolder.subfolders.filter(
-		(f) => f.folder.name !== path_to_remove
-	);
+	currentFolder.subfolders = currentFolder.subfolders.filter((f) => f.folder.name !== pathToRemove);
 
-	await currentFolder.folder.removeEntry(path_to_remove, { recursive: true });
+	await currentFolder.folder.removeEntry(pathToRemove, { recursive: true });
 }

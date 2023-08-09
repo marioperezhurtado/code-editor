@@ -46,11 +46,11 @@ export async function deleteFile(folder: TFolder, file: TFile): Promise<void> {
 		if (subfolder) currentFolder = subfolder;
 	}
 
-	const path_to_remove = paths.at(-1);
-	if (!path_to_remove) return;
+	const pathToRemove = paths.at(-1);
+	if (!pathToRemove) return;
 
-	currentFolder.subfiles = currentFolder.subfiles.filter((f) => f.file.name !== path_to_remove);
-	await currentFolder.folder.removeEntry(path_to_remove);
+	currentFolder.subfiles = currentFolder.subfiles.filter((f) => f.file.name !== pathToRemove);
+	await currentFolder.folder.removeEntry(pathToRemove);
 }
 
 export async function downloadFile(file: FileSystemFileHandle): Promise<void> {

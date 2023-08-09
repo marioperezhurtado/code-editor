@@ -33,23 +33,23 @@ function createRootFolder() {
 			set(folder);
 		},
 		close: () => set(null),
-		deleteFile: async (file_to_delete: TFile) =>
-			update((folder) => {
-				if (!folder) return folder;
+		deleteFile: async (fileToDelete: TFile) =>
+			update((rootFolder) => {
+				if (!rootFolder) return null;
 
-				deleteFile(folder, file_to_delete).then(() => {
-					set(folder);
+				deleteFile(rootFolder, fileToDelete).then(() => {
+					set(rootFolder);
 				});
-				return folder;
+				return rootFolder;
 			}),
-		deleteFolder: async (folder_to_delete: TFolder) =>
-			update((folder) => {
-				if (!folder) return folder;
+		deleteFolder: async (folderToDelete: TFolder) =>
+			update((rootFolder) => {
+				if (!rootFolder) return null;
 
-				deleteFolder(folder, folder_to_delete).then(() => {
-					set(folder);
+				deleteFolder(rootFolder, folderToDelete).then(() => {
+					set(rootFolder);
 				});
-				return folder;
+				return rootFolder;
 			})
 	};
 }
@@ -57,7 +57,7 @@ function createRootFolder() {
 export const COLOR_THEMES = [
 	{ title: 'Dark', code: 'dark' },
 	{ title: 'Light', code: 'light' },
-	{ title: 'Dark +', code: 'dark-plus' },
+	{ title: 'Dark Plus', code: 'dark-plus' },
 	{ title: 'Moonlight', code: 'moonlight' },
 	{ title: 'Gruvbox', code: 'gruvbox' },
 	{ title: 'Synthwave', code: 'synthwave' },
