@@ -5,11 +5,11 @@ export default {
 		extend: {
 			colors: {
 				dark: 'rgb(var(--dark) / <alpha-value>)',
-				'dark-2': '#2d3748',
-				'dark-3': '#4a5568',
-				light: '#f7fafc',
-				'light-2': '#a0aec0',
-				accent: '#f56565'
+				'dark-2': 'rgb(var(--dark-2) / <alpha-value>)',
+				'dark-3': 'rgb(var(--dark-3) / <alpha-value>)',
+				light: 'rgb(var(--light) / <alpha-value>)',
+				'light-2': 'rgb(var(--light-2) / <alpha-value>)',
+				accent: 'rgb(var(--accent) / <alpha-value>)'
 			}
 		}
 	},

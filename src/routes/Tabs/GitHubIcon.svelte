@@ -1,4 +1,4 @@
-<a href="/#" class="block px-1 ml-auto text-light-2">
+<a href="/#" class="block px-2 ml-auto text-light-2">
 	<svg
 		width="26px"
 		height="26px"

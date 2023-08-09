@@ -22,7 +22,7 @@
 	on:click={() => (folder.expanded = !folder.expanded)}
 	on:contextmenu={() => (actionsOpen = !actionsOpen)}
 	title={path}
-	class="flex items-center w-full text-sm transition rounded-sm hover:text-white hover:bg-dark-3"
+	class="flex items-center w-full text-sm transition rounded-sm hover:bg-dark-3"
 >
 	<img
 		src="/icons/right-angle.svg"

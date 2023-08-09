@@ -1,5 +1,5 @@
 <div class="mx-auto mt-32 w-fit">
-	<h2 class="mb-5 text-xl font-bold text-white">
+	<h2 class="mb-5 text-xl font-bold text-light">
 		Welcome to <span class="text-accent">Code Editor</span>
 	</h2>
 	<ul class="flex flex-col gap-2">

@@ -54,23 +54,26 @@ function createRootFolder() {
 	};
 }
 
-type Theme = 'dark' | 'light';
+export const COLOR_THEMES = [
+	{ title: 'Dark', code: 'dark' },
+	{ title: 'Light', code: 'light' },
+	{ title: 'Dark +', code: 'dark-plus' },
+	{ title: 'Moonlight', code: 'moonlight' },
+	{ title: 'Gruvbox', code: 'gruvbox' },
+	{ title: 'Synthwave', code: 'synthwave' },
+	{ title: 'Github Light', code: 'github-light' },
+	{ title: 'One Dark', code: 'one-dark' }
+] as const;
+type Theme = (typeof COLOR_THEMES)[number]['code'];
 
-function createColorTheme() {
-	if (typeof window === 'undefined') return;
-
-	const initialTheme = window.matchMedia('(prefers-color-scheme: light)').matches
-		? 'light'
-		: 'dark';
-
-	const { subscribe, set } = persisted('color-theme', initialTheme);
-
-	return {
-		subscribe,
-		setTheme: (theme: Theme) => set(theme)
-	};
-}
+export const LANGUAGES = [
+	{ title: 'English', code: 'en' },
+	{ title: 'Español', code: 'es' },
+	{ title: 'Français', code: 'fr' }
+] as const;
+type Language = (typeof LANGUAGES)[number]['code'];
 
 export const selectedFile = createSelectedFile();
 export const rootFolder = createRootFolder();
-export const colorTheme = createColorTheme();
+export const colorTheme = persisted<Theme>('color-theme', COLOR_THEMES[0].code);
+export const language = persisted<Language>('language', LANGUAGES[0].code);
