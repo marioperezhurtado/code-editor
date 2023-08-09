@@ -1,6 +1,7 @@
-import { writable } from 'svelte/store';
 import { readFile, deleteFile, type TFile } from '$lib/file';
 import { readFolder, deleteFolder, type TFolder } from '$lib/folder';
+import { writable } from 'svelte/store';
+import { persisted } from '$lib/persisted_store';
 
 type SelectedFile = {
 	file: TFile;
@@ -53,5 +54,23 @@ function createRootFolder() {
 	};
 }
 
+type Theme = 'dark' | 'light';
+
+function createColorTheme() {
+	if (typeof window === 'undefined') return;
+
+	const initialTheme = window.matchMedia('(prefers-color-scheme: light)').matches
+		? 'light'
+		: 'dark';
+
+	const { subscribe, set } = persisted('color-theme', initialTheme);
+
+	return {
+		subscribe,
+		setTheme: (theme: Theme) => set(theme)
+	};
+}
+
 export const selectedFile = createSelectedFile();
 export const rootFolder = createRootFolder();
+export const colorTheme = createColorTheme();

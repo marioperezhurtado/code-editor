@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+	:root {
+		--dark: 26 32 44;
+		--dark-2: 45 55 72;
+		--dark-3: 74 85 104;
+		--light: 247 250 252;
+		--light-2: 160 174 192;
+		--accent: 245 101 101;
+	}
+
+	/* Themes ... */
+}

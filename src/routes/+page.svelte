@@ -1,7 +1,8 @@
 <script lang="ts">
 	import FileExplorer from './FileExplorer/FileExplorer.svelte';
-	import Editor from './Editor/Editor.svelte';
 	import Tabs from './Tabs/Tabs.svelte';
+	import Editor from './Editor/Editor.svelte';
+	import StatusBar from './StatusBar/StatusBar.svelte';
 </script>
 
 <svelte:window on:contextmenu|preventDefault />
@@ -11,5 +12,6 @@
 	<div class="flex flex-col w-full h-full">
 		<Tabs />
 		<Editor />
+		<StatusBar />
 	</div>
 </main>

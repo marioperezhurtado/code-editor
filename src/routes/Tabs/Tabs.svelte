@@ -1,7 +1,8 @@
 <script lang="ts">
-	import FilePath from './FilePath.svelte';
-	import { selectedFile } from '../stores';
 	import { getFileIcon } from '$lib/file';
+	import { selectedFile } from '../stores';
+	import FilePath from './FilePath.svelte';
+	import GitHubIcon from './GitHubIcon.svelte';
 
 	$: icon = getFileIcon($selectedFile?.file.file.name ?? '');
 </script>
@@ -44,6 +45,7 @@
 			<span>Welcome!</span>
 		</li>
 	{/if}
+	<GitHubIcon />
 </ul>
 {#if $selectedFile}
 	<FilePath {icon} />

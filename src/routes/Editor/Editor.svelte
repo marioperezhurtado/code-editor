@@ -48,3 +48,18 @@
 		<WelcomeScreen />
 	{/if}
 </section>
+
+<style>
+	::-webkit-scrollbar {
+		width: 10px;
+	}
+
+	::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: rgb(var(--dark-2));
+		border-radius: 2px;
+	}
+</style>

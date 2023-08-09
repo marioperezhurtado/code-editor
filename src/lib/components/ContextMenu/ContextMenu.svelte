@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { clickOutside } from '$lib/actions/click_outside';
+	import { clickOutside } from '$lib/click_outside';
 
 	export let isOpen = false;
 </script>

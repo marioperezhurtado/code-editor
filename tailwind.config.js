@@ -4,7 +4,7 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				dark: '#1a202c',
+				dark: 'rgb(var(--dark) / <alpha-value>)',
 				'dark-2': '#2d3748',
 				'dark-3': '#4a5568',
 				light: '#f7fafc',
