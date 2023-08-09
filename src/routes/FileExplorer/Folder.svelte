@@ -1,17 +1,27 @@
 <script lang="ts">
+	import { resolvePathToFolder, type TFolder } from '$lib/folder';
+	import { rootFolder } from '../stores';
 	import File from './File.svelte';
 	import FolderActions from './FolderActions.svelte';
-	import type { TFolder } from '$lib/folder';
 
 	export let folder: TFolder;
 
 	let actionsOpen = false;
+	let path = folder.folder.name;
+
+	$: if ($rootFolder?.folder) {
+		resolvePathToFolder($rootFolder.folder, folder.folder).then((p) => {
+			if (p) {
+				path = `~/${$rootFolder?.folder.name}/${p.join('/')}`;
+			}
+		});
+	}
 </script>
 
 <button
 	on:click={() => (folder.expanded = !folder.expanded)}
 	on:contextmenu={() => (actionsOpen = !actionsOpen)}
-	title={folder.folder.name}
+	title={path}
 	class="flex items-center w-full text-sm transition rounded-sm hover:text-white hover:bg-dark-3"
 >
 	<img
