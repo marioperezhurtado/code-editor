@@ -3,12 +3,15 @@
 	import { clickOutside } from '$lib/click_outside';
 
 	let isOpen = false;
+
+	export let title: string;
 </script>
 
 <button
 	use:clickOutside
 	on:outclick|self={() => (isOpen = false)}
 	on:click={() => (isOpen = !isOpen)}
+	aria-label={title}
 	class="relative p-1 transition rounded-sm hover:bg-dark-2 hover:shadow-md"
 	class:bg-dark-2={isOpen}
 	class:shadow-md={isOpen}

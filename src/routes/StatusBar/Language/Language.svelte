@@ -5,7 +5,7 @@
 	import LanguageIcon from './LanguageIcon.svelte';
 </script>
 
-<DropdownMenu>
+<DropdownMenu title="Language">
 	<LanguageIcon slot="trigger" />
 	<svelte:fragment slot="content">
 		{#each LANGUAGES as lang}

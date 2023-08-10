@@ -5,11 +5,12 @@
 	import ColorThemeIcon from './ColorThemeIcon.svelte';
 
 	$: if (typeof document !== 'undefined') {
-		document.documentElement.className = $colorTheme ?? '';
+		document.documentElement.classList.remove(...COLOR_THEMES.map((theme) => theme.code));
+		document.documentElement.classList.add($colorTheme ?? '');
 	}
 </script>
 
-<DropdownMenu>
+<DropdownMenu title="Color Theme">
 	<ColorThemeIcon slot="trigger" />
 	<svelte:fragment slot="content">
 		{#each COLOR_THEMES as theme}

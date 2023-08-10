@@ -96,11 +96,11 @@ type Notification = {
 };
 
 export const FONT_SIZES = [
-	{ title: '12px', code: '12' },
-	{ title: '14px', code: '14' },
-	{ title: '16px (Default)', code: '16' },
-	{ title: '18px', code: '18' },
-	{ title: '20px', code: '20' }
+	{ title: '12px', code: 'xs' },
+	{ title: '14px', code: 'sm' },
+	{ title: '16px (Default)', code: 'base' },
+	{ title: '18px', code: 'lg' },
+	{ title: '20px', code: 'xl' }
 ];
 type FontSize = (typeof FONT_SIZES)[number]['code'];
 

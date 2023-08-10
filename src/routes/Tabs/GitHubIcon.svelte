@@ -1,4 +1,9 @@
-<a href="/#" class="block px-2 ml-auto text-light-2">
+<a
+	href="https://github.com/marioperezhurtado"
+	target="_blank"
+	rel="noopener noreferrer"
+	class="block px-2 text-light-2"
+>
 	<svg
 		width="26px"
 		height="26px"

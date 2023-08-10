@@ -45,7 +45,9 @@
 			<span>Welcome!</span>
 		</li>
 	{/if}
-	<GitHubIcon />
+	<li class="ml-auto">
+		<GitHubIcon />
+	</li>
 </ul>
 {#if $selectedFile}
 	<FilePath {icon} />

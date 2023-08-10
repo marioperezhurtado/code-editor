@@ -3,9 +3,14 @@
 	import DropdownMenu from '$lib/components/DropdownMenu/DropdownMenu.svelte';
 	import DropdownItem from '$lib/components/DropdownMenu/DropdownItem.svelte';
 	import FontSizeIcon from './FontSizeIcon.svelte';
+
+	$: if (typeof document !== 'undefined') {
+		document.documentElement.classList.remove(...FONT_SIZES.map((size) => `text-${size.code}`));
+		document.documentElement.classList.add(`text-${$fontSize}`);
+	}
 </script>
 
-<DropdownMenu>
+<DropdownMenu title="Font Size">
 	<FontSizeIcon slot="trigger" />
 	<svelte:fragment slot="content">
 		{#each FONT_SIZES as size}
