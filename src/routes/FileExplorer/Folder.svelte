@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { resolvePathToFolder, type TFolder } from '$lib/folder';
+	import { getFolderIcon, resolvePathToFolder, type TFolder } from '$lib/folder';
 	import { rootFolder } from '../stores';
 	import File from './File.svelte';
 	import FolderActions from './FolderActions.svelte';
 
 	export let folder: TFolder;
+	$: icon = getFolderIcon(folder.folder.name);
 
 	let actionsOpen = false;
 	let path = folder.folder.name;
@@ -30,9 +31,8 @@
 		class="w-5 h-5"
 		class:rotate-90={folder.expanded}
 	/>
-
 	<img
-		src="/icons/folder/folder{folder.expanded ? '-open' : ''}.svg"
+		src="/icons/folder/{icon}{folder.expanded ? '-open' : ''}.svg"
 		alt="folder"
 		class="w-4 h-4 mr-2"
 	/>

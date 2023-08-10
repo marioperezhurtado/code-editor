@@ -19,7 +19,7 @@ export async function readFile(fileHandle: FileSystemFileHandle): Promise<string
 }
 
 export function getFileIcon(filename: string): string {
-	const fileIcon = FILE_EXTENSIONS.find((ext) => filename.includes(ext.extension));
+	const fileIcon = FILE_ICONS.find((ext) => filename.includes(ext.extension));
 
 	return fileIcon?.icon ?? 'unknown';
 }
@@ -64,25 +64,23 @@ export async function downloadFile(file: FileSystemFileHandle): Promise<void> {
 	a.remove();
 }
 
-const FILE_EXTENSIONS = [
-	{ extension: 'pnpm-workspace.yaml', icon: 'pnpm' },
-	{ extension: 'tailwind.config', icon: 'tailwindcss' },
-	{ extension: '.prettierignore', icon: 'prettier' },
-	{ extension: 'postcss.config', icon: 'postcss' },
-	{ extension: 'pnpm-lock.yaml', icon: 'pnpm' },
-	{ extension: '.eslintignore', icon: 'eslint' },
-	{ extension: 'svelte.config', icon: 'svelte' },
-	{ extension: 'tsconfig.json', icon: 'tsconfig' },
+const FILE_ICONS = [
+	{ extension: 'pnpm', icon: 'pnpm' },
+	{ extension: 'tailwind', icon: 'tailwindcss' },
+	{ extension: 'postcss', icon: 'postcss' },
+	{ extension: 'eslint', icon: 'eslint' },
+	{ extension: 'tsconfig', icon: 'tsconfig' },
 	{ extension: 'package.json', icon: 'nodejs' },
-	{ extension: 'next.config', icon: 'next' },
-	{ extension: 'vite.config', icon: 'vite' },
-	{ extension: 'vite.config', icon: 'vite' },
-	{ extension: '.prettierrc', icon: 'prettier' },
-	{ extension: '.gitignore', icon: 'git' },
-	{ extension: '.eslintrc', icon: 'eslint' },
-	{ extension: 'yarn.lock', icon: 'yarn' },
-	{ extension: '.svelte', icon: 'svelte' },
-	{ extension: '.npmrc', icon: 'npm' },
+	{ extension: 'next', icon: 'next' },
+	{ extension: 'vite', icon: 'vite' },
+	{ extension: 'vite', icon: 'vite' },
+	{ extension: 'prettier', icon: 'prettier' },
+	{ extension: 'git', icon: 'git' },
+	{ extension: 'yarn', icon: 'yarn' },
+	{ extension: 'svelte', icon: 'svelte' },
+	{ extension: 'astro', icon: 'astro' },
+	{ extension: 'npm', icon: 'npm' },
+	{ extension: 'i18n', icon: 'i18n' },
 	{ extension: '.d.ts', icon: 'd.ts' },
 	{ extension: '.html', icon: 'html' },
 	{ extension: '.json', icon: 'json' },
@@ -91,8 +89,6 @@ const FILE_EXTENSIONS = [
 	{ extension: '.mp4', icon: 'video' },
 	{ extension: '.ogg', icon: 'video' },
 	{ extension: '.jpeg', icon: 'image' },
-	{ extension: '.astro', icon: 'astro' },
-	{ extension: 'i18n', icon: 'i18n' },
 	{ extension: '.svg', icon: 'svg' },
 	{ extension: '.png', icon: 'image' },
 	{ extension: '.jpg', icon: 'image' },

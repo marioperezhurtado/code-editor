@@ -36,6 +36,10 @@ export async function readFolder(dirHandle: FileSystemDirectoryHandle): Promise<
 	};
 }
 
+export function getFolderIcon(foldername: string): string {
+	return FOLDER_ICONS.find((icon) => foldername.includes(icon)) ?? 'default';
+}
+
 export async function resolvePathToFolder(
 	originFolder: FileSystemDirectoryHandle,
 	folderToResolve: FileSystemDirectoryHandle
@@ -65,3 +69,38 @@ export async function deleteFolder(rootFolder: TFolder, folder: TFolder): Promis
 
 	await currentFolder.folder.removeEntry(pathToRemove, { recursive: true });
 }
+
+const FOLDER_ICONS = [
+	'node',
+	'app',
+	'api',
+	'ci',
+	'config',
+	'components',
+	'git',
+	'component',
+	'git',
+	'coverage',
+	'font',
+	'function',
+	'dist',
+	'css',
+	'context',
+	'content',
+	'hook',
+	'i18n',
+	'src',
+	'test',
+	'lib',
+	'open',
+	'node',
+	'mock',
+	'server',
+	'temp',
+	'util',
+	'layout',
+	'script',
+	'style',
+	'image',
+	'asset'
+];
