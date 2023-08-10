@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Folder from './Folder.svelte';
-	import { rootFolder } from '../stores';
+	import { rootFolder, notifications } from '../stores';
 
 	let isLoading = false;
 
@@ -9,7 +9,11 @@
 		try {
 			await rootFolder.open();
 		} catch (err) {
-			console.log("Couldn't open folder");
+			notifications.add({
+				title: 'The folder could not be opened',
+				description: 'If the problem persists, try refreshing the page.',
+				type: 'error'
+			});
 		}
 		isLoading = false;
 	}

@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { rootFolder } from '../stores';
+	import { rootFolder, notifications } from '../stores';
 	import type { TFolder } from '$lib/folder';
 	import ContextMenu from '$lib/components/ContextMenu/ContextMenu.svelte';
 	import ContextMenuItem from '$lib/components/ContextMenu/ContextMenuItem.svelte';
 	import ContextMenuSeparator from '$lib/components/ContextMenu/ContextMenuSeparator.svelte';
-	import DangerModal from '$lib/components/DangerModal.svelte';
+	import Modal from '$lib/components/Modal.svelte';
 
 	export let folder: TFolder;
 	export let isOpen: boolean;
@@ -14,7 +14,15 @@
 	async function handleDelete() {
 		if (!$rootFolder?.folder) return;
 
-		await rootFolder.deleteFolder(folder);
+		try {
+			await rootFolder.deleteFolder(folder);
+		} catch (e) {
+			notifications.add({
+				title: `The folder "${folder.folder.name}" could not be deleted`,
+				description: 'Try again, or refresh the page.',
+				type: 'error'
+			});
+		}
 		isOpen = false;
 	}
 </script>
@@ -32,7 +40,7 @@
 	/>
 </ContextMenu>
 
-<DangerModal
+<Modal
 	isOpen={confirmingDelete}
 	onConfirm={handleDelete}
 	title="Are you sure you want to delete '{folder.folder.name}' and all its contents permanently?"

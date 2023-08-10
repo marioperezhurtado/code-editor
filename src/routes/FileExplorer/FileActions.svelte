@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { rootFolder } from '../stores';
+	import { rootFolder, notifications } from '../stores';
 	import { downloadFile, type TFile } from '$lib/file';
 	import ContextMenu from '$lib/components/ContextMenu/ContextMenu.svelte';
 	import ContextMenuItem from '$lib/components/ContextMenu/ContextMenuItem.svelte';
 	import ContextMenuSeparator from '$lib/components/ContextMenu/ContextMenuSeparator.svelte';
-	import DangerModal from '$lib/components/DangerModal.svelte';
+	import Modal from '$lib/components/Modal.svelte';
 
 	export let file: TFile;
 	export let isOpen: boolean;
@@ -14,12 +14,28 @@
 	async function handleDelete() {
 		if (!$rootFolder?.folder) return;
 
-		await rootFolder.deleteFile(file);
+		try {
+			await rootFolder.deleteFile(file);
+		} catch (e) {
+			notifications.add({
+				title: `The file "${file.file.name}" could not be deleted`,
+				description: 'Try again, or refresh the page.',
+				type: 'error'
+			});
+		}
 		isOpen = false;
 	}
 
 	async function handleDownload() {
-		await downloadFile(file.file);
+		try {
+			await downloadFile(file.file);
+		} catch (e) {
+			notifications.add({
+				title: `The file "${file.file.name}" could not be downloaded`,
+				description: 'It may have been deleted or moved.',
+				type: 'error'
+			});
+		}
 		isOpen = false;
 	}
 </script>
@@ -40,7 +56,7 @@
 	/>
 </ContextMenu>
 
-<DangerModal
+<Modal
 	isOpen={confirmingDelete}
 	onConfirm={handleDelete}
 	title="Are you sure you want to delete '{file.file.name}' permanently?"

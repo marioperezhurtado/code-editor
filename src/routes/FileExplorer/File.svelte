@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getFileIcon, resolvePathToFile, type TFile } from '$lib/file';
-	import { selectedFile, rootFolder } from '../stores';
+	import { selectedFile, rootFolder, notifications } from '../stores';
 	import FileActions from './FileActions.svelte';
 
 	export let file: TFile;
@@ -16,10 +16,22 @@
 			}
 		});
 	}
+
+	async function handleOpenFile() {
+		try {
+			await selectedFile.open(file);
+		} catch (e) {
+			notifications.add({
+				title: `The file "${file.file.name}" could not be opened`,
+				description: 'It may have been deleted or moved.',
+				type: 'error'
+			});
+		}
+	}
 </script>
 
 <button
-	on:click={() => selectedFile.open(file)}
+	on:click={handleOpenFile}
 	on:contextmenu={() => (actionsOpen = !actionsOpen)}
 	title={path}
 	class="flex items-center w-full gap-1 px-1 py-0.5 rounded-sm"

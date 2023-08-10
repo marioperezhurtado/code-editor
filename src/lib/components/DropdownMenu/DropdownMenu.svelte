@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fade } from 'svelte/transition';
 	import { clickOutside } from '$lib/click_outside';
 
 	let isOpen = false;
@@ -15,6 +16,7 @@
 	<slot name="trigger" />
 	{#if isOpen}
 		<div
+			in:fade={{ delay: 0, duration: 150 }}
 			class="absolute right-0 flex flex-col gap-px overflow-hidden text-xs rounded-sm shadow-md bottom-9 bg-dark-3 text-light whitespace-nowrap"
 		>
 			<slot name="content" />

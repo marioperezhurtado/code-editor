@@ -72,7 +72,32 @@ export const LANGUAGES = [
 ] as const;
 type Language = (typeof LANGUAGES)[number]['code'];
 
+type Notification = {
+	title: string;
+	description: string;
+	type: 'success' | 'error' | 'warning' | 'info';
+};
+
+function createNotifications() {
+	const { subscribe, set, update } = writable<Notification[]>([]);
+
+	return {
+		subscribe,
+		add: (notification: Notification) =>
+			update((notifications) => {
+				notifications.push(notification);
+				return notifications;
+			}),
+		remove: (notification: Notification) =>
+			update((notifications) => {
+				return notifications.filter((n) => n !== notification);
+			}),
+		clearAll: () => set([])
+	};
+}
+
 export const selectedFile = createSelectedFile();
 export const rootFolder = createRootFolder();
 export const colorTheme = persisted<Theme>('color-theme', COLOR_THEMES[0].code);
 export const language = persisted<Language>('language', LANGUAGES[0].code);
+export const notifications = createNotifications();

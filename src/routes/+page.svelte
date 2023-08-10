@@ -3,6 +3,7 @@
 	import Tabs from './Tabs/Tabs.svelte';
 	import Editor from './Editor/Editor.svelte';
 	import StatusBar from './StatusBar/StatusBar.svelte';
+	import Notifications from './Notifications.svelte';
 </script>
 
 <svelte:window on:contextmenu|preventDefault />
@@ -14,4 +15,5 @@
 		<Editor />
 		<StatusBar />
 	</div>
+	<Notifications />
 </main>
