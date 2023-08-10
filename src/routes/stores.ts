@@ -55,13 +55,12 @@ function createRootFolder() {
 }
 
 export const COLOR_THEMES = [
-	{ title: 'Dark', code: 'dark' },
-	{ title: 'Light', code: 'light' },
-	{ title: 'Dark Plus', code: 'dark-plus' },
-	{ title: 'Moonlight', code: 'moonlight' },
-	{ title: 'Gruvbox', code: 'gruvbox' },
-	{ title: 'Synthwave', code: 'synthwave' },
+	{ title: 'Dark (Code Editor)', code: 'dark' },
+	{ title: 'Light (Code Editor)', code: 'light' },
+	{ title: 'Monokai', code: 'monokai' },
 	{ title: 'Github Light', code: 'github-light' },
+	{ title: 'Moonlight', code: 'moonlight' },
+	{ title: 'Synthwave', code: 'synthwave' },
 	{ title: 'One Dark', code: 'one-dark' }
 ] as const;
 type Theme = (typeof COLOR_THEMES)[number]['code'];
