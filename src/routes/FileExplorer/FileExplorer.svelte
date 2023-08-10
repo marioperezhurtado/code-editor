@@ -5,9 +5,10 @@
 	let isLoading = false;
 
 	async function handleOpenFolder() {
-		isLoading = true;
 		try {
-			await rootFolder.open();
+			const dirHandle = await window.showDirectoryPicker();
+			isLoading = true;
+			await rootFolder.open(dirHandle);
 		} catch (err) {
 			notifications.add({
 				title: 'The folder could not be opened',

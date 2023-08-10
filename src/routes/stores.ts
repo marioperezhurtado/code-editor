@@ -26,8 +26,7 @@ function createRootFolder() {
 
 	return {
 		subscribe,
-		open: async () => {
-			const dirHandle = await window.showDirectoryPicker();
+		open: async (dirHandle: FileSystemDirectoryHandle) => {
 			const folder = await readFolder(dirHandle);
 			folder.expanded = true;
 			set(folder);
