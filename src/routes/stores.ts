@@ -54,6 +54,24 @@ function createRootFolder() {
 	};
 }
 
+function createNotifications() {
+	const { subscribe, set, update } = writable<Notification[]>([]);
+
+	return {
+		subscribe,
+		add: (notification: Notification) =>
+			update((notifications) => {
+				notifications.push(notification);
+				return notifications;
+			}),
+		remove: (notification: Notification) =>
+			update((notifications) => {
+				return notifications.filter((n) => n !== notification);
+			}),
+		clearAll: () => set([])
+	};
+}
+
 export const COLOR_THEMES = [
 	{ title: 'Dark (Code Editor)', code: 'dark' },
 	{ title: 'Light (Code Editor)', code: 'light' },
@@ -78,26 +96,18 @@ type Notification = {
 	type: 'success' | 'error' | 'warning' | 'info';
 };
 
-function createNotifications() {
-	const { subscribe, set, update } = writable<Notification[]>([]);
-
-	return {
-		subscribe,
-		add: (notification: Notification) =>
-			update((notifications) => {
-				notifications.push(notification);
-				return notifications;
-			}),
-		remove: (notification: Notification) =>
-			update((notifications) => {
-				return notifications.filter((n) => n !== notification);
-			}),
-		clearAll: () => set([])
-	};
-}
+export const FONT_SIZES = [
+	{ title: '12px', code: '12' },
+	{ title: '14px', code: '14' },
+	{ title: '16px (Default)', code: '16' },
+	{ title: '18px', code: '18' },
+	{ title: '20px', code: '20' }
+];
+type FontSize = (typeof FONT_SIZES)[number]['code'];
 
 export const selectedFile = createSelectedFile();
 export const rootFolder = createRootFolder();
+export const notifications = createNotifications();
 export const colorTheme = persisted<Theme>('color-theme', COLOR_THEMES[0].code);
 export const language = persisted<Language>('language', LANGUAGES[0].code);
-export const notifications = createNotifications();
+export const fontSize = persisted<FontSize>('font-size', FONT_SIZES[2].code);

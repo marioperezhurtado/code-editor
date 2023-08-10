@@ -13,7 +13,12 @@
 	<ColorThemeIcon slot="trigger" />
 	<svelte:fragment slot="content">
 		{#each COLOR_THEMES as theme}
-			<DropdownItem title={theme.title} action={() => colorTheme?.set(theme.code)} />
+			<DropdownItem action={() => colorTheme?.set(theme.code)}>
+				{theme.title}
+				{#if $colorTheme === theme.code}
+					<div class="w-1 h-1 rounded-full bg-accent" />
+				{/if}
+			</DropdownItem>
 		{/each}
 	</svelte:fragment>
 </DropdownMenu>

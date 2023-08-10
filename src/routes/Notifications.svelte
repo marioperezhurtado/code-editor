@@ -1,19 +1,7 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import { notifications } from './stores';
-
-	const DISPLAY_TIME = 8000;
-
-	onMount(() => {
-		const interval = setInterval(() => {
-			if ($notifications.length > 0) {
-				notifications.remove($notifications[0]);
-			}
-		}, DISPLAY_TIME);
-		return () => clearInterval(interval);
-	});
 </script>
 
 <div class="fixed flex flex-col-reverse gap-4 bottom-10 right-4">

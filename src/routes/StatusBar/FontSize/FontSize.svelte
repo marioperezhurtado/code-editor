@@ -1,17 +1,17 @@
 <script lang="ts">
-	import { LANGUAGES, language } from '../../stores';
+	import { FONT_SIZES, fontSize } from '../../stores';
 	import DropdownMenu from '$lib/components/DropdownMenu/DropdownMenu.svelte';
 	import DropdownItem from '$lib/components/DropdownMenu/DropdownItem.svelte';
-	import LanguageIcon from './LanguageIcon.svelte';
+	import FontSizeIcon from './FontSizeIcon.svelte';
 </script>
 
 <DropdownMenu>
-	<LanguageIcon slot="trigger" />
+	<FontSizeIcon slot="trigger" />
 	<svelte:fragment slot="content">
-		{#each LANGUAGES as lang}
-			<DropdownItem action={() => language.set(lang.code)}>
-				{lang.title}
-				{#if $language === lang.code}
+		{#each FONT_SIZES as size}
+			<DropdownItem action={() => fontSize.set(size.code)}>
+				{size.title}
+				{#if $fontSize === size.code}
 					<div class="w-1 h-1 rounded-full bg-accent" />
 				{/if}
 			</DropdownItem>
