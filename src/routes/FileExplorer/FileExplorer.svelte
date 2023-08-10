@@ -12,7 +12,7 @@
 			notifications.add({
 				title: 'The folder could not be opened',
 				description: 'If the problem persists, try refreshing the page.',
-				type: 'error'
+				type: 'warning'
 			});
 		}
 		isLoading = false;

@@ -29,6 +29,11 @@
 	async function handleDownload() {
 		try {
 			await downloadFile(file.file);
+			notifications.add({
+				title: `The file "${file.file.name}" has been downloaded`,
+				description: 'You can find it in your downloads folder.',
+				type: 'success'
+			});
 		} catch (e) {
 			notifications.add({
 				title: `The file "${file.file.name}" could not be downloaded`,
