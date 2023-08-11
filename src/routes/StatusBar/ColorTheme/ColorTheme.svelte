@@ -14,7 +14,7 @@
 	<ColorThemeIcon slot="trigger" />
 	<svelte:fragment slot="content">
 		{#each COLOR_THEMES as theme}
-			<DropdownItem action={() => colorTheme?.set(theme.code)}>
+			<DropdownItem on:click={() => colorTheme?.set(theme.code)}>
 				{theme.title}
 				{#if $colorTheme === theme.code}
 					<div class="w-1 h-1 rounded-full bg-accent" />

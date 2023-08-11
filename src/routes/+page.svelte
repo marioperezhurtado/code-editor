@@ -4,7 +4,7 @@
 	import Tabs from './Tabs/Tabs.svelte';
 	import Editor from './Editor/Editor.svelte';
 	import StatusBar from './StatusBar/StatusBar.svelte';
-	import Notifications from './Notifications.svelte';
+	import Notifications from './Notifications/Notifications.svelte';
 
 	function handlePageUnload(e: BeforeUnloadEvent) {
 		if ($rootFolder) {

@@ -14,7 +14,7 @@
 	<FontSizeIcon slot="trigger" />
 	<svelte:fragment slot="content">
 		{#each FONT_SIZES as size}
-			<DropdownItem action={() => fontSize.set(size.code)}>
+			<DropdownItem on:click={() => fontSize.set(size.code)}>
 				{size.title}
 				{#if $fontSize === size.code}
 					<div class="w-1 h-1 rounded-full bg-accent" />

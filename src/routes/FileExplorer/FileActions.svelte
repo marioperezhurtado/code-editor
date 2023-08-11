@@ -46,18 +46,18 @@
 </script>
 
 <ContextMenu bind:isOpen>
-	<ContextMenuItem title="Cut" command="X" action={handleDelete} />
-	<ContextMenuItem title="Copy" command="C" action={handleDelete} />
+	<ContextMenuItem title="Cut" command="X" on:click={handleDelete} />
+	<ContextMenuItem title="Copy" command="C" on:click={handleDelete} />
 
 	<ContextMenuSeparator />
-	<ContextMenuItem title="Download" action={handleDownload} />
+	<ContextMenuItem title="Download" on:click={handleDownload} />
 	<ContextMenuSeparator />
 
-	<ContextMenuItem title="Rename" command="R" action={handleDelete} />
+	<ContextMenuItem title="Rename" command="R" on:click={handleDelete} />
 	<ContextMenuItem
 		title="Delete permanently"
 		command="D"
-		action={() => (confirmingDelete = true)}
+		on:click={() => (confirmingDelete = true)}
 	/>
 </ContextMenu>
 

@@ -9,7 +9,7 @@
 	<LanguageIcon slot="trigger" />
 	<svelte:fragment slot="content">
 		{#each LANGUAGES as lang}
-			<DropdownItem action={() => language.set(lang.code)}>
+			<DropdownItem on:click={() => language.set(lang.code)}>
 				{lang.title}
 				{#if $language === lang.code}
 					<div class="w-1 h-1 rounded-full bg-accent" />
