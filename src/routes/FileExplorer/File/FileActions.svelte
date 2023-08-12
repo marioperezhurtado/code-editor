@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { rootFolder, notifications } from '../../stores';
-	import { deleteFile, downloadFile, type TFile } from '$lib/file';
+	import { downloadFile, deleteFile, type TFile } from '$lib/file';
 	import type { TFolder } from '$lib/folder';
 	import ContextMenu from '$lib/components/ContextMenu/ContextMenu.svelte';
 	import ContextMenuItem from '$lib/components/ContextMenu/ContextMenuItem.svelte';
@@ -10,8 +10,14 @@
 	export let file: TFile;
 	export let parentFolder: TFolder;
 	export let isOpen: boolean;
+	export let isRenaming: boolean;
 
 	let confirmingDelete = false;
+
+	function handleStartRenaming() {
+		isRenaming = true;
+		isOpen = false;
+	}
 
 	async function handleDelete() {
 		try {
@@ -46,29 +52,31 @@
 	}
 </script>
 
-<ContextMenu on:outclick={() => (isOpen = false)}>
-	<ContextMenuItem title="Cut" command="X" />
-	<ContextMenuItem title="Copy" command="C" />
+{#if isOpen}
+	<ContextMenu on:outclick={() => (isOpen = false)}>
+		<ContextMenuItem title="Cut" command="X" />
+		<ContextMenuItem title="Copy" command="C" />
 
-	<ContextMenuSeparator />
-	<ContextMenuItem title="Download" on:click={handleDownload} />
-	<ContextMenuSeparator />
+		<ContextMenuSeparator />
+		<ContextMenuItem title="Download" on:click={handleDownload} />
+		<ContextMenuSeparator />
 
-	<ContextMenuItem title="Rename" command="R" on:click={handleDelete} />
-	<ContextMenuItem
-		title="Delete permanently"
-		command="D"
-		on:click={() => (confirmingDelete = true)}
-	/>
-
-	{#if confirmingDelete}
-		<Modal
-			on:confirm={handleDelete}
-			on:cancel={() => (confirmingDelete = false)}
-			title="Are you sure you want to delete '{file.file.name}' permanently?"
-			description="This action cannot be undone."
-			cancelText="Cancel"
-			confirmText="Delete"
+		<ContextMenuItem title="Rename..." command="R" on:click={handleStartRenaming} />
+		<ContextMenuItem
+			title="Delete permanently"
+			command="D"
+			on:click={() => (confirmingDelete = true)}
 		/>
-	{/if}
-</ContextMenu>
+
+		{#if confirmingDelete}
+			<Modal
+				on:confirm={handleDelete}
+				on:cancel={() => (confirmingDelete = false)}
+				title="Are you sure you want to delete '{file.file.name}' permanently?"
+				description="This action cannot be undone."
+				cancelText="Cancel"
+				confirmText="Delete"
+			/>
+		{/if}
+	</ContextMenu>
+{/if}

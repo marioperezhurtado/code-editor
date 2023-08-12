@@ -56,6 +56,19 @@ export async function createFile(parentFolder: TFolder, filename: string): Promi
 	parentFolder.subfiles = [...parentFolder.subfiles, { file: newFile }];
 }
 
+export async function renameFile(parentFolder: TFolder, file: TFile, newName: string) {
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
+	await file.file.move(newName);
+
+	parentFolder.subfiles = parentFolder.subfiles.map((f) => {
+		if (f.file.name === file.file.name) {
+			return { file: file.file };
+		}
+		return f;
+	});
+}
+
 const FILE_ICONS = [
 	{ extension: 'pnpm', icon: 'pnpm' },
 	{ extension: 'tailwind', icon: 'tailwindcss' },

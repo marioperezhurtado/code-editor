@@ -42,9 +42,7 @@
 	</span>
 </button>
 
-{#if parentFolder}
-	<FolderActions {folder} {parentFolder} bind:isOpen={actionsOpen} />
-{/if}
+<FolderActions {folder} {parentFolder} bind:isOpen={actionsOpen} />
 
 {#if folder.expanded}
 	<ul class="pl-1.5 ml-2 text-sm border-l border-dark-3">

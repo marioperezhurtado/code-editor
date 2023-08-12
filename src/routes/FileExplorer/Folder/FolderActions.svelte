@@ -9,7 +9,7 @@
 	import NewFolder from './NewFolder.svelte';
 
 	export let folder: TFolder;
-	export let parentFolder: TFolder;
+	export let parentFolder: TFolder | null;
 	export let isOpen: boolean;
 
 	let confirmingDelete = false;
@@ -29,6 +29,8 @@
 	}
 
 	async function handleDelete() {
+		if (!parentFolder) return;
+
 		try {
 			await deleteFolder(parentFolder, folder);
 			rootFolder.refresh();
@@ -55,16 +57,17 @@
 		<ContextMenuItem title="New file..." command="N" on:click={handleStartCreatingFile} />
 		<ContextMenuItem title="New folder..." command="F" on:click={handleStartCreatingFolder} />
 
-		<ContextMenuSeparator />
-		<ContextMenuItem title="Move to..." command="M" />
-		<ContextMenuSeparator />
+		{#if parentFolder}
+			<ContextMenuSeparator />
+			<ContextMenuItem title="Move to..." command="M" />
+			<ContextMenuSeparator />
 
-		<ContextMenuItem title="Rename" command="R" />
-		<ContextMenuItem
-			title="Delete permanently"
-			command="D"
-			on:click={() => (confirmingDelete = true)}
-		/>
+			<ContextMenuItem
+				title="Delete permanently"
+				command="D"
+				on:click={() => (confirmingDelete = true)}
+			/>
+		{/if}
 
 		{#if confirmingDelete}
 			<Modal
