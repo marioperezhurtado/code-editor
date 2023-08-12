@@ -59,8 +59,6 @@
 
 		{#if parentFolder}
 			<ContextMenuSeparator />
-			<ContextMenuItem title="Move to..." command="M" />
-			<ContextMenuSeparator />
 
 			<ContextMenuItem
 				title="Delete permanently"

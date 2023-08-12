@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { rootFolder, notifications } from '../../stores';
+	import { rootFolder, selectedFile, notifications } from '../../stores';
 	import { downloadFile, deleteFile, type TFile } from '$lib/file';
 	import type { TFolder } from '$lib/folder';
 	import ContextMenu from '$lib/components/ContextMenu/ContextMenu.svelte';
@@ -21,6 +21,7 @@
 
 	async function handleDelete() {
 		try {
+			if ($selectedFile?.file === file.file) selectedFile.close();
 			await deleteFile(parentFolder, file);
 			rootFolder.refresh();
 		} catch (e) {
@@ -54,8 +55,7 @@
 
 {#if isOpen}
 	<ContextMenu on:outclick={() => (isOpen = false)}>
-		<ContextMenuItem title="Cut" command="X" />
-		<ContextMenuItem title="Copy" command="C" />
+		<ContextMenuItem title="Move to..." command="M" />
 
 		<ContextMenuSeparator />
 		<ContextMenuItem title="Download" on:click={handleDownload} />

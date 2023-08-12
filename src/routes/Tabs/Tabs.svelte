@@ -1,20 +1,54 @@
 <script lang="ts">
-	import { getFileIcon } from '$lib/file';
-	import { selectedFile } from '../stores';
+	import { getFileIcon, writeToFile } from '$lib/file';
+	import { selectedFile, notifications } from '../stores';
+	import Modal from '$lib/components/Modal.svelte';
 	import FilePath from './FilePath.svelte';
 	import GitHubIcon from './GitHubIcon.svelte';
 
-	$: icon = getFileIcon($selectedFile?.file.file.name ?? '');
+	$: icon = getFileIcon($selectedFile?.file.name ?? '');
+	$: edited = $selectedFile?.content !== $selectedFile?.editedContent;
+
+	let showSaveModal = false;
+
+	function handleCloseTab() {
+		edited ? (showSaveModal = true) : selectedFile.close();
+	}
+
+	function handleResetChanges() {
+		showSaveModal = false;
+		selectedFile.reset();
+		selectedFile.close();
+	}
+
+	async function handleSaveChanges() {
+		if (!$selectedFile?.editedContent) return;
+
+		try {
+			await writeToFile($selectedFile.file, $selectedFile.editedContent);
+			showSaveModal = false;
+			selectedFile.save();
+			selectedFile.close();
+		} catch (e) {
+			notifications.add({
+				title: `Could not save changes to '${$selectedFile.file.name}'"`,
+				description: 'Try again, or refresh the page.',
+				type: 'error'
+			});
+		}
+	}
 </script>
 
 <ul class="flex items-center text-sm border-b bg-dark-2 border-b-dark-3">
 	{#if $selectedFile}
 		<li class="flex items-center gap-1 px-3 py-2 pr-2 -mb-px border-r bg-dark border-dark-3">
 			<img src="/icons/file/{icon}.svg" alt={icon} class="w-4 h-4" />
+			{#if edited}
+				<span>⚫</span>
+			{/if}
 			<span class="overflow-hidden whitespace-nowrap text-ellipsis">
-				{$selectedFile.file.file.name}
+				{$selectedFile.file.name}
 			</span>
-			<button on:click={selectedFile.close} class="ml-1 transition rounded-full hover:bg-dark-3">
+			<button on:click={handleCloseTab} class="ml-1 transition rounded-full hover:bg-dark-3">
 				<img src="/icons/close.svg" alt="close" class="w-4 h-4" />
 			</button>
 		</li>
@@ -51,4 +85,15 @@
 </ul>
 {#if $selectedFile}
 	<FilePath {icon} />
+{/if}
+
+{#if showSaveModal}
+	<Modal
+		title="Save changes to file '{$selectedFile?.file.name}'?"
+		description="Your changes will be lost if you don't save them"
+		cancelText="Don't save"
+		confirmText="Save changes"
+		on:cancel={handleResetChanges}
+		on:confirm={handleSaveChanges}
+	/>
 {/if}

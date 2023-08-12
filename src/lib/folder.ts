@@ -20,7 +20,7 @@ export async function readFolder(dirHandle: FileSystemDirectoryHandle): Promise<
 				expanded: false
 			});
 		} else {
-			subfiles.push({ file: entry });
+			subfiles.push({ file: entry, content: null, editedContent: null });
 		}
 	}
 

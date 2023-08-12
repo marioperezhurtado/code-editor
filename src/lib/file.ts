@@ -2,6 +2,8 @@ import type { TFolder } from './folder';
 
 export type TFile = {
 	file: FileSystemFileHandle;
+	content: string | null;
+	editedContent: string | null;
 };
 
 export function getFileExtension(fileName: string): string {
@@ -53,20 +55,33 @@ export async function downloadFile(file: FileSystemFileHandle): Promise<void> {
 export async function createFile(parentFolder: TFolder, filename: string): Promise<void> {
 	const newFile = await parentFolder.folder.getFileHandle(filename, { create: true });
 
-	parentFolder.subfiles = [...parentFolder.subfiles, { file: newFile }];
+	parentFolder.subfiles = [
+		...parentFolder.subfiles,
+		{ file: newFile, content: '', editedContent: '' }
+	];
 }
 
-export async function renameFile(parentFolder: TFolder, file: TFile, newName: string) {
+export async function renameFile(
+	parentFolder: TFolder,
+	file: TFile,
+	newName: string
+): Promise<void> {
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 	// @ts-ignore
 	await file.file.move(newName);
 
 	parentFolder.subfiles = parentFolder.subfiles.map((f) => {
 		if (f.file.name === file.file.name) {
-			return { file: file.file };
+			return { file: file.file, content: file.content, editedContent: file.editedContent };
 		}
 		return f;
 	});
+}
+
+export async function writeToFile(file: FileSystemFileHandle, content: string): Promise<void> {
+	const writable = await file.createWritable();
+	await writable.write(content);
+	await writable.close();
 }
 
 const FILE_ICONS = [

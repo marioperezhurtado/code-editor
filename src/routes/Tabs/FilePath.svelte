@@ -8,7 +8,7 @@
 
 	$: {
 		if ($selectedFile && $rootFolder) {
-			resolvePathToFile($rootFolder?.folder, $selectedFile.file.file).then((path) => {
+			resolvePathToFile($rootFolder?.folder, $selectedFile.file).then((path) => {
 				filePath = [$rootFolder?.folder.name ?? 'root', ...path];
 			});
 		}

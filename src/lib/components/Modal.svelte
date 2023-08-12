@@ -17,7 +17,7 @@
 	class="fixed max-w-md p-4 -translate-x-1/2 rounded-sm shadow-md bottom-1/2 left-1/2 bg-dark-3"
 >
 	<h1 class="mb-5 text-base">{title}</h1>
-	<p>{description}</p>
+	<p class="text-sm">{description}</p>
 	<div class="flex justify-end gap-2 mt-5 text-sm">
 		<button
 			on:click={() => dispatch('cancel')}
