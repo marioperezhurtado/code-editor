@@ -27,24 +27,27 @@
 	}
 </script>
 
-<ContextMenu bind:isOpen>
-	<ContextMenuItem title="Move to..." command="M" action={handleDelete} />
+<ContextMenu on:outclick={() => (isOpen = false)}>
+	<ContextMenuItem title="Move to..." command="M" />
 
 	<ContextMenuSeparator />
 
-	<ContextMenuItem title="Rename" command="R" action={handleDelete} />
+	<ContextMenuItem title="Rename" command="R" />
 	<ContextMenuItem
 		title="Delete permanently"
 		command="D"
-		action={() => (confirmingDelete = true)}
+		on:click={() => (confirmingDelete = true)}
 	/>
-</ContextMenu>
 
-<Modal
-	isOpen={confirmingDelete}
-	onConfirm={handleDelete}
-	title="Are you sure you want to delete '{folder.folder.name}' and all its contents permanently?"
-	description="This action cannot be undone."
-	cancelText="Cancel"
-	confirmText="Delete"
-/>
+	{#if confirmingDelete}
+		<Modal
+			on:confirm={handleDelete}
+			on:cancel={() => (confirmingDelete = false)}
+			title="Are you sure you want to delete '{folder.folder
+				.name}' and all its contents permanently?"
+			description="This action cannot be undone."
+			cancelText="Cancel"
+			confirmText="Delete"
+		/>
+	{/if}
+</ContextMenu>

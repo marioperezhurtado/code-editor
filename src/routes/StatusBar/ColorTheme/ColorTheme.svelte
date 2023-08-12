@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { COLOR_THEMES, colorTheme } from '../../stores';
+	import { COLOR_THEMES, colorTheme } from '../user_config';
 	import DropdownMenu from '$lib/components/DropdownMenu/DropdownMenu.svelte';
 	import DropdownItem from '$lib/components/DropdownMenu/DropdownItem.svelte';
 	import ColorThemeIcon from './ColorThemeIcon.svelte';

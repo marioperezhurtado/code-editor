@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { FONT_SIZES, fontSize } from '../../stores';
+	import { FONT_SIZES, fontSize } from '../user_config';
 	import DropdownMenu from '$lib/components/DropdownMenu/DropdownMenu.svelte';
 	import DropdownItem from '$lib/components/DropdownMenu/DropdownItem.svelte';
 	import FontSizeIcon from './FontSizeIcon.svelte';
 
 	$: if (typeof document !== 'undefined') {
-		document.documentElement.classList.remove(...FONT_SIZES.map((size) => `text-${size.code}`));
-		document.documentElement.classList.add(`text-${$fontSize}`);
+		document.documentElement.style.fontSize = $fontSize;
 	}
 </script>
 

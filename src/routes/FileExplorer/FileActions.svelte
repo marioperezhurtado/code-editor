@@ -45,9 +45,9 @@
 	}
 </script>
 
-<ContextMenu bind:isOpen>
-	<ContextMenuItem title="Cut" command="X" on:click={handleDelete} />
-	<ContextMenuItem title="Copy" command="C" on:click={handleDelete} />
+<ContextMenu on:outclick={() => (isOpen = false)}>
+	<ContextMenuItem title="Cut" command="X" />
+	<ContextMenuItem title="Copy" command="C" />
 
 	<ContextMenuSeparator />
 	<ContextMenuItem title="Download" on:click={handleDownload} />
@@ -59,13 +59,15 @@
 		command="D"
 		on:click={() => (confirmingDelete = true)}
 	/>
-</ContextMenu>
 
-<Modal
-	isOpen={confirmingDelete}
-	onConfirm={handleDelete}
-	title="Are you sure you want to delete '{file.file.name}' permanently?"
-	description="This action cannot be undone."
-	cancelText="Cancel"
-	confirmText="Delete"
-/>
+	{#if confirmingDelete}
+		<Modal
+			on:confirm={handleDelete}
+			on:cancel={() => (confirmingDelete = false)}
+			title="Are you sure you want to delete '{file.file.name}' permanently?"
+			description="This action cannot be undone."
+			cancelText="Cancel"
+			confirmText="Delete"
+		/>
+	{/if}
+</ContextMenu>

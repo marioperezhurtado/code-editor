@@ -1,7 +1,6 @@
 import { readFile, deleteFile, type TFile } from '$lib/file';
 import { readFolder, deleteFolder, type TFolder } from '$lib/folder';
 import { writable } from 'svelte/store';
-import { persisted } from '$lib/persisted_store';
 
 type SelectedFile = {
 	file: TFile;
@@ -53,6 +52,12 @@ function createRootFolder() {
 	};
 }
 
+type Notification = {
+	title: string;
+	description: string;
+	type: 'success' | 'error' | 'warning' | 'info';
+};
+
 function createNotifications() {
 	const { subscribe, set, update } = writable<Notification[]>([]);
 
@@ -71,42 +76,6 @@ function createNotifications() {
 	};
 }
 
-export const COLOR_THEMES = [
-	{ title: 'Dark (Code Editor)', code: 'dark' },
-	{ title: 'Light (Code Editor)', code: 'light' },
-	{ title: 'Monokai', code: 'monokai' },
-	{ title: 'Github Light', code: 'github-light' },
-	{ title: 'Moonlight', code: 'moonlight' },
-	{ title: 'Synthwave', code: 'synthwave' },
-	{ title: 'One Dark', code: 'one-dark' }
-] as const;
-type Theme = (typeof COLOR_THEMES)[number]['code'];
-
-export const LANGUAGES = [
-	{ title: 'English', code: 'en' },
-	{ title: 'Español', code: 'es' },
-	{ title: 'Français', code: 'fr' }
-] as const;
-type Language = (typeof LANGUAGES)[number]['code'];
-
-type Notification = {
-	title: string;
-	description: string;
-	type: 'success' | 'error' | 'warning' | 'info';
-};
-
-export const FONT_SIZES = [
-	{ title: '12px', code: 'xs' },
-	{ title: '14px', code: 'sm' },
-	{ title: '16px (Default)', code: 'base' },
-	{ title: '18px', code: 'lg' },
-	{ title: '20px', code: 'xl' }
-];
-type FontSize = (typeof FONT_SIZES)[number]['code'];
-
 export const selectedFile = createSelectedFile();
 export const rootFolder = createRootFolder();
 export const notifications = createNotifications();
-export const colorTheme = persisted<Theme>('color-theme', COLOR_THEMES[0].code);
-export const language = persisted<Language>('language', LANGUAGES[0].code);
-export const fontSize = persisted<FontSize>('font-size', FONT_SIZES[2].code);

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { LANGUAGES, language } from '../../stores';
+	import { LANGUAGES, language } from '../user_config';
 	import DropdownMenu from '$lib/components/DropdownMenu/DropdownMenu.svelte';
 	import DropdownItem from '$lib/components/DropdownMenu/DropdownItem.svelte';
 	import LanguageIcon from './LanguageIcon.svelte';

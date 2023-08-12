@@ -24,5 +24,6 @@
 		<Editor />
 		<StatusBar />
 	</div>
-	<Notifications />
 </main>
+
+<Notifications />
