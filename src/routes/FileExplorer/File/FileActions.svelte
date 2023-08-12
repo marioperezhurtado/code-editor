@@ -1,21 +1,22 @@
 <script lang="ts">
-	import { rootFolder, notifications } from '../stores';
-	import { downloadFile, type TFile } from '$lib/file';
+	import { rootFolder, notifications } from '../../stores';
+	import { deleteFile, downloadFile, type TFile } from '$lib/file';
+	import type { TFolder } from '$lib/folder';
 	import ContextMenu from '$lib/components/ContextMenu/ContextMenu.svelte';
 	import ContextMenuItem from '$lib/components/ContextMenu/ContextMenuItem.svelte';
 	import ContextMenuSeparator from '$lib/components/ContextMenu/ContextMenuSeparator.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 
 	export let file: TFile;
+	export let parentFolder: TFolder;
 	export let isOpen: boolean;
 
 	let confirmingDelete = false;
 
 	async function handleDelete() {
-		if (!$rootFolder?.folder) return;
-
 		try {
-			await rootFolder.deleteFile(file);
+			await deleteFile(parentFolder, file);
+			rootFolder.refresh();
 		} catch (e) {
 			notifications.add({
 				title: `The file "${file.file.name}" could not be deleted`,

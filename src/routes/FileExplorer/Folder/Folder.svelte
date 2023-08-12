@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { getFolderIcon, resolvePathToFolder, type TFolder } from '$lib/folder';
-	import { rootFolder } from '../stores';
-	import File from './File.svelte';
+	import { rootFolder } from '../../stores';
+	import File from '../File/File.svelte';
 	import FolderActions from './FolderActions.svelte';
 
 	export let folder: TFolder;
-	$: icon = getFolderIcon(folder.folder.name);
+	export let parentFolder: TFolder | null = null;
 
 	let actionsOpen = false;
 	let path = folder.folder.name;
@@ -17,6 +17,7 @@
 			}
 		});
 	}
+	$: icon = getFolderIcon(folder.folder.name);
 </script>
 
 <button
@@ -41,20 +42,20 @@
 	</span>
 </button>
 
-{#if actionsOpen}
-	<FolderActions {folder} bind:isOpen={actionsOpen} />
+{#if parentFolder}
+	<FolderActions {folder} {parentFolder} bind:isOpen={actionsOpen} />
 {/if}
 
 {#if folder.expanded}
 	<ul class="pl-1.5 ml-2 text-sm border-l border-dark-3">
 		{#each folder.subfolders as subfolder}
 			<li>
-				<svelte:self folder={subfolder} />
+				<svelte:self folder={subfolder} parentFolder={folder} />
 			</li>
 		{/each}
 		{#each folder.subfiles as subfile}
 			<li>
-				<File file={subfile} />
+				<File file={subfile} parentFolder={folder} />
 			</li>
 		{/each}
 	</ul>

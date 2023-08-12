@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { getFileIcon, resolvePathToFile, type TFile } from '$lib/file';
-	import { selectedFile, rootFolder, notifications } from '../stores';
+	import type { TFolder } from '$lib/folder';
+	import { selectedFile, rootFolder, notifications } from '../../stores';
 	import FileActions from './FileActions.svelte';
 
 	export let file: TFile;
+	export let parentFolder: TFolder;
 	$: icon = getFileIcon(file.file.name);
 
 	let actionsOpen = false;
@@ -44,5 +46,5 @@
 </button>
 
 {#if actionsOpen}
-	<FileActions {file} bind:isOpen={actionsOpen} />
+	<FileActions {file} {parentFolder} bind:isOpen={actionsOpen} />
 {/if}

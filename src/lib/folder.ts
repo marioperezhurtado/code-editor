@@ -24,7 +24,6 @@ export async function readFolder(dirHandle: FileSystemDirectoryHandle): Promise<
 		}
 	}
 
-	// sort alphabetically
 	subfiles.sort((a, b) => a.file.name.localeCompare(b.file.name));
 	subfolders.sort((a, b) => a.folder.name.localeCompare(b.folder.name));
 
@@ -44,30 +43,25 @@ export async function resolvePathToFolder(
 	originFolder: FileSystemDirectoryHandle,
 	folderToResolve: FileSystemDirectoryHandle
 ): Promise<Array<string>> {
-	if (!originFolder) return [];
-
 	const path = await originFolder.resolve(folderToResolve);
 	return path ?? [];
 }
 
-export async function deleteFolder(rootFolder: TFolder, folder: TFolder): Promise<void> {
-	const paths = await resolvePathToFolder(rootFolder.folder, folder.folder);
-	if (!paths) return;
+export async function deleteFolder(parentFolder: TFolder, folderToDelete: TFolder): Promise<void> {
+	await parentFolder.folder.removeEntry(folderToDelete.folder.name, { recursive: true });
 
-	// find folder
-	let currentFolder = rootFolder;
+	parentFolder.subfolders = parentFolder.subfolders.filter(
+		(f) => f.folder.name !== folderToDelete.folder.name
+	);
+}
 
-	for (let i = 0; i < paths.length - 1; i++) {
-		const subfolder = currentFolder?.subfolders.find((f) => f.folder.name === paths[i]);
-		if (subfolder) currentFolder = subfolder;
-	}
+export async function createFolder(parentFolder: TFolder, foldername: string): Promise<void> {
+	const newFolder = await parentFolder.folder.getDirectoryHandle(foldername, { create: true });
 
-	const pathToRemove = paths.at(-1);
-	if (!pathToRemove) return;
-
-	currentFolder.subfolders = currentFolder.subfolders.filter((f) => f.folder.name !== pathToRemove);
-
-	await currentFolder.folder.removeEntry(pathToRemove, { recursive: true });
+	parentFolder.subfolders = [
+		...parentFolder.subfolders,
+		{ folder: newFolder, subfolders: [], subfiles: [], expanded: false }
+	];
 }
 
 const FOLDER_ICONS = [

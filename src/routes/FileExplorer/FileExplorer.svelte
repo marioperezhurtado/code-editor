@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Folder from './Folder.svelte';
+	import Folder from './Folder/Folder.svelte';
 	import { rootFolder, notifications } from '../stores';
 
 	let isLoading = false;

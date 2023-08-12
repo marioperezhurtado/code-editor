@@ -1,5 +1,5 @@
-import { readFile, deleteFile, type TFile } from '$lib/file';
-import { readFolder, deleteFolder, type TFolder } from '$lib/folder';
+import { readFile, type TFile } from '$lib/file';
+import { readFolder, type TFolder } from '$lib/folder';
 import { writable } from 'svelte/store';
 
 type SelectedFile = {
@@ -31,24 +31,7 @@ function createRootFolder() {
 			set(folder);
 		},
 		close: () => set(null),
-		deleteFile: async (fileToDelete: TFile) =>
-			update((rootFolder) => {
-				if (!rootFolder) return null;
-
-				deleteFile(rootFolder, fileToDelete).then(() => {
-					set(rootFolder);
-				});
-				return rootFolder;
-			}),
-		deleteFolder: async (folderToDelete: TFolder) =>
-			update((rootFolder) => {
-				if (!rootFolder) return null;
-
-				deleteFolder(rootFolder, folderToDelete).then(() => {
-					set(rootFolder);
-				});
-				return rootFolder;
-			})
+		refresh: () => update((folder) => folder)
 	};
 }
 

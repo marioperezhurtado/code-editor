@@ -20,37 +20,23 @@ export async function readFile(fileHandle: FileSystemFileHandle): Promise<string
 
 export function getFileIcon(filename: string): string {
 	const fileIcon = FILE_ICONS.find((ext) => filename.includes(ext.extension));
-
-	return fileIcon?.icon ?? 'unknown';
+	return fileIcon?.icon ?? 'default';
 }
 
 export async function resolvePathToFile(
 	folder: FileSystemDirectoryHandle,
 	file: FileSystemFileHandle
 ): Promise<Array<string>> {
-	if (!file) return [];
-
 	const path = await folder.resolve(file);
 	return path ?? [];
 }
 
-export async function deleteFile(folder: TFolder, file: TFile): Promise<void> {
-	const paths = await resolvePathToFile(folder.folder, file.file);
-	if (!paths) return;
+export async function deleteFile(parentFolder: TFolder, fileToDelete: TFile): Promise<void> {
+	await parentFolder.folder.removeEntry(fileToDelete.file.name);
 
-	// find file
-	let currentFolder = folder;
-
-	for (let i = 0; i < paths.length - 1; i++) {
-		const subfolder = currentFolder?.subfolders.find((f) => f.folder.name === paths[i]);
-		if (subfolder) currentFolder = subfolder;
-	}
-
-	const pathToRemove = paths.at(-1);
-	if (!pathToRemove) return;
-
-	currentFolder.subfiles = currentFolder.subfiles.filter((f) => f.file.name !== pathToRemove);
-	await currentFolder.folder.removeEntry(pathToRemove);
+	parentFolder.subfiles = parentFolder.subfiles.filter(
+		(f) => f.file.name !== fileToDelete.file.name
+	);
 }
 
 export async function downloadFile(file: FileSystemFileHandle): Promise<void> {
@@ -62,6 +48,12 @@ export async function downloadFile(file: FileSystemFileHandle): Promise<void> {
 	document.body.appendChild(a);
 	a.click();
 	a.remove();
+}
+
+export async function createFile(parentFolder: TFolder, filename: string): Promise<void> {
+	const newFile = await parentFolder.folder.getFileHandle(filename, { create: true });
+
+	parentFolder.subfiles = [...parentFolder.subfiles, { file: newFile }];
 }
 
 const FILE_ICONS = [
