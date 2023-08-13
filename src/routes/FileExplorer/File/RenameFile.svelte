@@ -8,11 +8,11 @@
 	export let parentFolder: TFolder;
 	export let isOpen: boolean;
 
-	let newFilename = file.file.name;
+	let newFilename = file.name;
 	$: icon = getFileIcon(newFilename);
 
 	async function handleRenameFile() {
-		if (!newFilename || newFilename === file.file.name) {
+		if (!newFilename || newFilename === file.name) {
 			isOpen = false;
 			return;
 		}
@@ -22,7 +22,7 @@
 			rootFolder.refresh();
 		} catch (e) {
 			notifications.add({
-				title: `The file "${file.file.name}" could not be renamed`,
+				title: `The file "${file.name}" could not be renamed`,
 				description: 'Try again, or refresh the page.',
 				type: 'error'
 			});

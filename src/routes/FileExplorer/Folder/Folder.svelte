@@ -8,11 +8,11 @@
 	export let parentFolder: TFolder | null = null;
 
 	let actionsOpen = false;
-	let path = folder.folder.name;
+	let path = `~/${folder.folder.name}`;
 
 	$: if ($rootFolder?.folder) {
-		resolvePathToFolder($rootFolder.folder, folder.folder).then((p) => {
-			if (p) {
+		resolvePathToFolder($rootFolder, folder).then((p) => {
+			if (p.length > 0) {
 				path = `~/${$rootFolder?.folder.name}/${p.join('/')}`;
 			}
 		});

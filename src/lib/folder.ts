@@ -20,11 +20,11 @@ export async function readFolder(dirHandle: FileSystemDirectoryHandle): Promise<
 				expanded: false
 			});
 		} else {
-			subfiles.push({ file: entry, content: null, editedContent: null });
+			subfiles.push(entry);
 		}
 	}
 
-	subfiles.sort((a, b) => a.file.name.localeCompare(b.file.name));
+	subfiles.sort((a, b) => a.name.localeCompare(b.name));
 	subfolders.sort((a, b) => a.folder.name.localeCompare(b.folder.name));
 
 	return {
@@ -40,10 +40,10 @@ export function getFolderIcon(foldername: string): string {
 }
 
 export async function resolvePathToFolder(
-	originFolder: FileSystemDirectoryHandle,
-	folderToResolve: FileSystemDirectoryHandle
+	originFolder: TFolder,
+	folderToResolve: TFolder
 ): Promise<Array<string>> {
-	const path = await originFolder.resolve(folderToResolve);
+	const path = await originFolder.folder.resolve(folderToResolve.folder);
 	return path ?? [];
 }
 

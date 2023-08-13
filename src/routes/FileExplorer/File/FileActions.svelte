@@ -26,12 +26,12 @@
 
 	async function handleDelete() {
 		try {
-			if ($selectedFile?.file === file.file) selectedFile.close();
+			if ($selectedFile?.file === file) selectedFile.close();
 			await deleteFile(parentFolder, file);
 			rootFolder.refresh();
 		} catch (e) {
 			notifications.add({
-				title: `The file "${file.file.name}" could not be deleted`,
+				title: `The file "${file.name}" could not be deleted`,
 				description: 'Try again, or refresh the page.',
 				type: 'error'
 			});
@@ -41,15 +41,15 @@
 
 	async function handleDownload() {
 		try {
-			await downloadFile(file.file);
+			await downloadFile(file);
 			notifications.add({
-				title: `The file "${file.file.name}" has been downloaded`,
+				title: `The file "${file.name}" has been downloaded`,
 				description: 'You can find it in your downloads folder.',
 				type: 'success'
 			});
 		} catch (e) {
 			notifications.add({
-				title: `The file "${file.file.name}" could not be downloaded`,
+				title: `The file "${file.name}" could not be downloaded`,
 				description: 'It may have been deleted or moved.',
 				type: 'error'
 			});
@@ -77,7 +77,7 @@
 			<Modal
 				on:confirm={handleDelete}
 				on:cancel={handleClose}
-				title="Are you sure you want to delete '{file.file.name}' permanently?"
+				title="Are you sure you want to delete '{file.name}' permanently?"
 				description="This action cannot be undone."
 				cancelText="Cancel"
 				confirmText="Delete"

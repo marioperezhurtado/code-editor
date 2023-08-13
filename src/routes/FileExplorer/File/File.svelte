@@ -7,14 +7,14 @@
 
 	export let file: TFile;
 	export let parentFolder: TFolder;
-	$: icon = getFileIcon(file.file.name);
+	$: icon = getFileIcon(file.name);
 
 	let actionsOpen = false;
 	let renaming = false;
-	let path = file.file.name;
+	let path = file.name;
 
 	$: if ($rootFolder?.folder) {
-		resolvePathToFile($rootFolder.folder, file.file).then((p) => {
+		resolvePathToFile($rootFolder, file).then((p) => {
 			if (p) {
 				path = `~/${$rootFolder?.folder.name}/${p.join('/')}`;
 			}
@@ -26,7 +26,7 @@
 			await selectedFile.open(file);
 		} catch (e) {
 			notifications.add({
-				title: `The file "${file.file.name}" could not be opened`,
+				title: `The file "${file.name}" could not be opened`,
 				description: 'It may have been deleted or moved.',
 				type: 'error'
 			});
@@ -46,7 +46,7 @@
 	>
 		<img src="/icons/file/{icon}.svg" alt={icon} class="w-4 h-4" />
 		<span class="overflow-hidden whitespace-nowrap text-ellipsis">
-			{file.file.name}
+			{file.name}
 		</span>
 	</button>
 {/if}

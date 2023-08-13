@@ -24,8 +24,8 @@
 		if (!$selectedFile?.editedContent) return;
 
 		try {
-			await writeToFile($selectedFile.file, $selectedFile.editedContent);
 			showSaveModal = false;
+			await writeToFile($selectedFile.file, $selectedFile.editedContent);
 			selectedFile.save();
 			selectedFile.close();
 		} catch (e) {

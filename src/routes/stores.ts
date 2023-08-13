@@ -2,7 +2,11 @@ import { readFile, type TFile } from '$lib/file';
 import { readFolder, type TFolder } from '$lib/folder';
 import { writable } from 'svelte/store';
 
-type SelectedFile = TFile;
+type SelectedFile = {
+	file: TFile;
+	content: string | null;
+	editedContent: string | null;
+};
 
 function createSelectedFile() {
 	const { subscribe, set, update } = writable<SelectedFile | null>(null);
@@ -11,12 +15,12 @@ function createSelectedFile() {
 		subscribe,
 		set,
 		open: async (file: TFile) => {
-			if (file.content === null) {
-				const content = await readFile(file.file);
-				file.content = content;
-				file.editedContent = content;
-			}
-			set(file);
+			const content = await readFile(file);
+			set({
+				file,
+				content,
+				editedContent: content
+			});
 		},
 		close: () => set(null),
 		reset: () =>
