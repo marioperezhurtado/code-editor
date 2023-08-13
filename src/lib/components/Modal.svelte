@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { clickOutside } from '$lib/click_outside';
 	import { scale } from 'svelte/transition';
 	import { createEventDispatcher } from 'svelte';
 
@@ -14,6 +15,8 @@
 
 <div
 	in:scale
+	use:clickOutside
+	on:outclick={() => dispatch('cancel')}
 	class="fixed max-w-md p-4 -translate-x-1/2 rounded-sm shadow-md bottom-1/2 left-1/2 bg-dark-3"
 >
 	<h1 class="mb-5 text-base">{title}</h1>

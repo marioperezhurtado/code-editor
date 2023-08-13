@@ -19,6 +19,11 @@
 		isOpen = false;
 	}
 
+	function handleClose() {
+		confirmingDelete = false;
+		isOpen = false;
+	}
+
 	async function handleDelete() {
 		try {
 			if ($selectedFile?.file === file.file) selectedFile.close();
@@ -54,7 +59,7 @@
 </script>
 
 {#if isOpen}
-	<ContextMenu on:outclick={() => (isOpen = false)}>
+	<ContextMenu on:outclick={handleClose}>
 		<ContextMenuItem title="Move to..." command="M" />
 
 		<ContextMenuSeparator />
@@ -71,7 +76,7 @@
 		{#if confirmingDelete}
 			<Modal
 				on:confirm={handleDelete}
-				on:cancel={() => (confirmingDelete = false)}
+				on:cancel={handleClose}
 				title="Are you sure you want to delete '{file.file.name}' permanently?"
 				description="This action cannot be undone."
 				cancelText="Cancel"
