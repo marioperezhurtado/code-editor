@@ -6,12 +6,11 @@
 	import RenameFile from './RenameFile.svelte';
 
 	export let file: TFile;
-	export let parentFolder: TFolder;
-	$: icon = getFileIcon(file.name);
+	$: icon = getFileIcon(file.file.name);
 
 	let actionsOpen = false;
 	let renaming = false;
-	let path = file.name;
+	let path = file.file.name;
 
 	$: if ($rootFolder?.folder) {
 		resolvePathToFile($rootFolder, file).then((p) => {
@@ -26,7 +25,7 @@
 			await selectedFile.open(file);
 		} catch (e) {
 			notifications.add({
-				title: `The file "${file.name}" could not be opened`,
+				title: `The file "${file.file.name}" could not be opened`,
 				description: 'It may have been deleted or moved.',
 				type: 'error'
 			});
@@ -35,7 +34,7 @@
 </script>
 
 {#if renaming}
-	<RenameFile {file} {parentFolder} bind:isOpen={renaming} />
+	<RenameFile {file} bind:isOpen={renaming} />
 {:else}
 	<button
 		on:click={handleOpenFile}
@@ -46,9 +45,9 @@
 	>
 		<img src="/icons/file/{icon}.svg" alt={icon} class="w-4 h-4" />
 		<span class="overflow-hidden whitespace-nowrap text-ellipsis">
-			{file.name}
+			{file.file.name}
 		</span>
 	</button>
 {/if}
 
-<FileActions {file} {parentFolder} bind:isOpen={actionsOpen} bind:isRenaming={renaming} />
+<FileActions {file} bind:isOpen={actionsOpen} bind:isRenaming={renaming} />

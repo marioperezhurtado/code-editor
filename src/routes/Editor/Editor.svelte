@@ -3,7 +3,7 @@
 	import { selectedFile } from '../stores';
 	import { getFileExtension, getFileUrl } from '$lib/file';
 
-	$: fileName = $selectedFile?.file.name;
+	$: fileName = $selectedFile?.file.file.name;
 	$: fileExtension = getFileExtension(fileName ?? '');
 	$: lineCount = $selectedFile?.content?.split('\n').length ?? 0;
 
@@ -19,7 +19,7 @@
 		{#if isImage}
 			{#await getFileUrl($selectedFile.file) then imageUrl}
 				<div class="flex items-center justify-center w-full h-full">
-					<img src={imageUrl} alt={$selectedFile.file.name} class="max-w-full max-h-full" />
+					<img src={imageUrl} alt={$selectedFile.file.file.name} class="max-w-full max-h-full" />
 				</div>
 			{/await}
 		{:else if isVideo}
@@ -31,7 +31,7 @@
 				</div>
 			{/await}
 		{:else}
-			<div class="flex gap-6 text-sm">
+			<div class="flex h-full gap-6 text-sm">
 				<p class="text-right text-dark-3">
 					{#each Array.from({ length: lineCount }, (_, i) => i + 1) as line}
 						{line}
@@ -39,7 +39,7 @@
 					{/each}
 				</p>
 				<p
-					class="font-mono whitespace-pre-wrap outline-none"
+					class="w-full h-full font-mono whitespace-pre-wrap outline-none"
 					bind:innerText={$selectedFile.editedContent}
 					contenteditable
 				/>

@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { rootFolder, notifications } from '../../stores';
+	import { fileClipboard } from '../file_clipboard';
 	import { deleteFolder, type TFolder } from '$lib/folder';
+	import { copyFile } from '$lib/file';
+
 	import ContextMenu from '$lib/components/ContextMenu/ContextMenu.svelte';
 	import ContextMenuItem from '$lib/components/ContextMenu/ContextMenuItem.svelte';
 	import ContextMenuSeparator from '$lib/components/ContextMenu/ContextMenuSeparator.svelte';
@@ -15,6 +18,24 @@
 	let confirmingDelete = false;
 	let creatingFile = false;
 	let creatingFolder = false;
+
+	async function handlePasteFile() {
+		if (!$fileClipboard) return;
+
+		try {
+			await copyFile($fileClipboard, folder);
+			fileClipboard.paste();
+			rootFolder.refresh();
+		} catch (e) {
+			console.error(e);
+			notifications.add({
+				title: `The file "${$fileClipboard.file.name}" could not be pasted`,
+				description: 'Try again, or refresh the page.',
+				type: 'error'
+			});
+		}
+		isOpen = false;
+	}
 
 	function handleStartCreatingFile() {
 		folder.expanded = true;
@@ -54,6 +75,11 @@
 
 {#if isOpen}
 	<ContextMenu on:outclick={() => (isOpen = false)}>
+		{#if $fileClipboard}
+			<ContextMenuItem title="Paste" command="V" on:click={handlePasteFile} />
+			<ContextMenuSeparator />
+		{/if}
+
 		<ContextMenuItem title="New file..." command="N" on:click={handleStartCreatingFile} />
 		<ContextMenuItem title="New folder..." command="F" on:click={handleStartCreatingFolder} />
 

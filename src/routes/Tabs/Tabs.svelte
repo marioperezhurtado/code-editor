@@ -5,7 +5,7 @@
 	import FilePath from './FilePath.svelte';
 	import GitHubIcon from './GitHubIcon.svelte';
 
-	$: icon = getFileIcon($selectedFile?.file.name ?? '');
+	$: icon = getFileIcon($selectedFile?.file.file.name ?? '');
 	$: edited = $selectedFile?.content !== $selectedFile?.editedContent;
 
 	let showSaveModal = false;
@@ -30,7 +30,7 @@
 			selectedFile.close();
 		} catch (e) {
 			notifications.add({
-				title: `Could not save changes to '${$selectedFile.file.name}'"`,
+				title: `Could not save changes to '${$selectedFile.file.file.name}'"`,
 				description: 'Try again, or refresh the page.',
 				type: 'error'
 			});
@@ -46,7 +46,7 @@
 				<span>⚫</span>
 			{/if}
 			<span class="overflow-hidden whitespace-nowrap text-ellipsis">
-				{$selectedFile.file.name}
+				{$selectedFile.file.file.name}
 			</span>
 			<button on:click={handleCloseTab} class="ml-1 transition rounded-full hover:bg-dark-3">
 				<img src="/icons/close.svg" alt="close" class="w-4 h-4" />
@@ -89,7 +89,7 @@
 
 {#if showSaveModal}
 	<Modal
-		title="Save changes to file '{$selectedFile?.file.name}'?"
+		title="Save changes to file '{$selectedFile?.file.file.name}'?"
 		description="Your changes will be lost if you don't save them"
 		cancelText="Don't save"
 		confirmText="Save changes"

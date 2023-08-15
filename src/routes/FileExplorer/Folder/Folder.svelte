@@ -48,12 +48,12 @@
 	<ul class="pl-1.5 ml-2 text-sm border-l border-dark-3">
 		{#each folder.subfolders as subfolder}
 			<li>
-				<svelte:self folder={subfolder} parentFolder={folder} />
+				<svelte:self bind:folder={subfolder} bind:parentFolder={folder} />
 			</li>
 		{/each}
 		{#each folder.subfiles as subfile}
 			<li>
-				<File file={subfile} parentFolder={folder} />
+				<File bind:file={subfile} />
 			</li>
 		{/each}
 	</ul>

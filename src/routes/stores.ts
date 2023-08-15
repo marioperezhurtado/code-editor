@@ -44,7 +44,7 @@ function createRootFolder() {
 	return {
 		subscribe,
 		open: async (dirHandle: FileSystemDirectoryHandle) => {
-			const folder = await readFolder(dirHandle);
+			const folder = await readFolder(dirHandle, null);
 			folder.expanded = true;
 			set(folder);
 		},

@@ -1,28 +1,26 @@
 <script lang="ts">
 	import { clickOutside } from '$lib/click_outside';
 	import { getFileIcon, renameFile, type TFile } from '$lib/file';
-	import type { TFolder } from '$lib/folder';
 	import { rootFolder, notifications } from '../../stores';
 
 	export let file: TFile;
-	export let parentFolder: TFolder;
 	export let isOpen: boolean;
 
-	let newFilename = file.name;
+	let newFilename = file.file.name;
 	$: icon = getFileIcon(newFilename);
 
 	async function handleRenameFile() {
-		if (!newFilename || newFilename === file.name) {
+		if (!newFilename || newFilename === file.file.name) {
 			isOpen = false;
 			return;
 		}
 
 		try {
-			await renameFile(parentFolder, file, newFilename);
+			await renameFile(file, newFilename);
 			rootFolder.refresh();
 		} catch (e) {
 			notifications.add({
-				title: `The file "${file.name}" could not be renamed`,
+				title: `The file "${file.file.name}" could not be renamed`,
 				description: 'Try again, or refresh the page.',
 				type: 'error'
 			});

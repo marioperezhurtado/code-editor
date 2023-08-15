@@ -2,33 +2,49 @@ import type { TFile } from '$lib/file';
 
 export type TFolder = {
 	folder: FileSystemDirectoryHandle;
+	parentFolder: TFolder | null;
 	subfolders: TFolder[];
 	subfiles: TFile[];
 	expanded: boolean;
 };
 
-export async function readFolder(dirHandle: FileSystemDirectoryHandle): Promise<TFolder> {
+export async function readFolder(
+	dirHandle: FileSystemDirectoryHandle,
+	parentFolder: TFolder | null
+): Promise<TFolder> {
 	const subfolders: TFolder['subfolders'] = [];
 	const subfiles: TFolder['subfiles'] = [];
 
+	const currentFolder = {
+		folder: dirHandle,
+		parentFolder,
+		subfolders,
+		subfiles,
+		expanded: false
+	};
+
 	for await (const entry of dirHandle.values()) {
 		if (entry.kind === 'directory') {
-			const children = await readFolder(entry);
+			const children = await readFolder(entry, currentFolder);
 
 			subfolders.push({
 				...children,
 				expanded: false
 			});
 		} else {
-			subfiles.push(entry);
+			subfiles.push({
+				file: entry,
+				parentFolder: currentFolder
+			});
 		}
 	}
 
-	subfiles.sort((a, b) => a.name.localeCompare(b.name));
+	subfiles.sort((a, b) => a.file.name.localeCompare(b.file.name));
 	subfolders.sort((a, b) => a.folder.name.localeCompare(b.folder.name));
 
 	return {
 		folder: dirHandle,
+		parentFolder,
 		subfiles,
 		subfolders,
 		expanded: false
@@ -56,11 +72,11 @@ export async function deleteFolder(parentFolder: TFolder, folderToDelete: TFolde
 }
 
 export async function createFolder(parentFolder: TFolder, foldername: string): Promise<void> {
-	const newFolder = await parentFolder.folder.getDirectoryHandle(foldername, { create: true });
+	const newFolder = await parentFolder?.folder.getDirectoryHandle(foldername, { create: true });
 
 	parentFolder.subfolders = [
 		...parentFolder.subfolders,
-		{ folder: newFolder, subfolders: [], subfiles: [], expanded: false }
+		{ folder: newFolder, parentFolder, subfolders: [], subfiles: [], expanded: false }
 	];
 }
 

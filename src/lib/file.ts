@@ -1,18 +1,21 @@
 import type { TFolder } from './folder';
 
-export type TFile = FileSystemFileHandle;
+export type TFile = {
+	file: FileSystemFileHandle;
+	parentFolder: TFolder;
+};
 
 export function getFileExtension(fileName: string): string {
 	return fileName.slice(fileName.lastIndexOf('.') + 1);
 }
 
 export async function getFileUrl(file: TFile): Promise<string> {
-	const fileResult = await file.getFile();
+	const fileResult = await file.file.getFile();
 	return URL.createObjectURL(fileResult);
 }
 
 export async function readFile(fileHandle: TFile): Promise<string> {
-	const file = await fileHandle.getFile();
+	const file = await fileHandle.file.getFile();
 	return file.text();
 }
 
@@ -22,44 +25,47 @@ export function getFileIcon(filename: string): string {
 }
 
 export async function resolvePathToFile(folder: TFolder, file: TFile): Promise<Array<string>> {
-	const path = await folder.folder.resolve(file);
+	const path = await folder.folder.resolve(file.file);
 	return path ?? [];
 }
 
-export async function deleteFile(parentFolder: TFolder, fileToDelete: TFile): Promise<void> {
-	await parentFolder.folder.removeEntry(fileToDelete.name);
+export async function deleteFile(fileToDelete: TFile): Promise<void> {
+	const { parentFolder } = fileToDelete;
 
-	parentFolder.subfiles = parentFolder.subfiles.filter((f) => f.name !== fileToDelete.name);
+	await parentFolder.folder.removeEntry(fileToDelete.file.name);
+
+	parentFolder.subfiles = parentFolder.subfiles.filter(
+		(f) => f.file.name !== fileToDelete.file.name
+	);
 }
 
 export async function downloadFile(file: TFile): Promise<void> {
-	const blob = await file.getFile();
+	const blob = await file.file.getFile();
 	const url = URL.createObjectURL(blob);
 	const a = document.createElement('a');
 	a.href = url;
-	a.download = file.name;
+	a.download = file.file.name;
 	document.body.appendChild(a);
 	a.click();
 	a.remove();
 }
 
-export async function createFile(parentFolder: TFolder, filename: string): Promise<void> {
+export async function createFile(parentFolder: TFolder, filename: string): Promise<TFile> {
 	const newFile = await parentFolder.folder.getFileHandle(filename, { create: true });
 
-	parentFolder.subfiles = [...parentFolder.subfiles, newFile];
+	parentFolder.subfiles = [...parentFolder.subfiles, { file: newFile, parentFolder }];
+
+	return { file: newFile, parentFolder };
 }
 
-export async function renameFile(
-	parentFolder: TFolder,
-	file: TFile,
-	newName: string
-): Promise<void> {
+export async function renameFile(file: TFile, newName: string): Promise<void> {
+	const { parentFolder } = file;
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 	// @ts-ignore
 	await file.file.move(newName);
 
 	parentFolder.subfiles = parentFolder.subfiles.map((f) => {
-		if (f.name === file.name) {
+		if (f.file.name === file.file.name) {
 			return file;
 		}
 		return f;
@@ -67,9 +73,16 @@ export async function renameFile(
 }
 
 export async function writeToFile(file: TFile, content: string): Promise<void> {
-	const writable = await file.createWritable();
+	const writable = await file.file.createWritable();
 	await writable.write(content);
 	await writable.close();
+}
+
+export async function copyFile(file: TFile, destination: TFolder): Promise<void> {
+	const copiedFile = await createFile(destination, file.file.name);
+	const copiedContent = await readFile(file);
+
+	await writeToFile(copiedFile, copiedContent);
 }
 
 const FILE_ICONS = [
