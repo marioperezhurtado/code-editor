@@ -38,6 +38,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@types/wicg-file-system-access": "^2020.9.6"
+		"@types/wicg-file-system-access": "^2020.9.6",
+		"highlight.js": "^11.8.0"
 	}
 }

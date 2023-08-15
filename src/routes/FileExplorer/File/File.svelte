@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { getFileIcon, resolvePathToFile, type TFile } from '$lib/file';
-	import type { TFolder } from '$lib/folder';
 	import { selectedFile, rootFolder, notifications } from '../../stores';
 	import FileActions from './FileActions.svelte';
 	import RenameFile from './RenameFile.svelte';

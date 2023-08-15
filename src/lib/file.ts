@@ -9,6 +9,12 @@ export function getFileExtension(fileName: string): string {
 	return fileName.slice(fileName.lastIndexOf('.') + 1);
 }
 
+export function getFileLanguage(fileName: string): (typeof SUPPORTED_LANGUAGES)[number] {
+	const fileExtension = getFileExtension(fileName);
+	const language = SUPPORTED_LANGUAGES.find((lang) => lang.extension === fileExtension);
+	return language ?? { name: 'Plain Text', extension: 'txt' };
+}
+
 export async function getFileUrl(file: TFile): Promise<string> {
 	const fileResult = await file.file.getFile();
 	return URL.createObjectURL(fileResult);
@@ -101,6 +107,7 @@ const FILE_ICONS = [
 	{ extension: 'svelte', icon: 'svelte' },
 	{ extension: 'astro', icon: 'astro' },
 	{ extension: 'npm', icon: 'npm' },
+	{ extension: '.php', icon: 'php' },
 	{ extension: 'i18n', icon: 'i18n' },
 	{ extension: '.d.ts', icon: 'd.ts' },
 	{ extension: '.html', icon: 'html' },
@@ -124,4 +131,42 @@ const FILE_ICONS = [
 	{ extension: '.js', icon: 'js' },
 	{ extension: '.ts', icon: 'ts' },
 	{ extension: '.md', icon: 'md' }
+] as const;
+
+export const SUPPORTED_LANGUAGES = [
+	{ name: 'Bash', extension: 'sh' },
+	{ name: 'C', extension: 'c' },
+	{ name: 'C++', extension: 'cpp' },
+	{ name: 'C#', extension: 'cs' },
+	{ name: 'CSS', extension: 'css' },
+	{ name: 'Dart', extension: 'dart' },
+	{ name: 'Elixir', extension: 'ex' },
+	{ name: 'Ruby', extension: 'rb' },
+	{ name: 'Excel', extension: 'xlsx' },
+	{ name: 'F#', extension: 'fs' },
+	{ name: 'Go', extension: 'go' },
+	{ name: 'Haskell', extension: 'hs' },
+	{ name: 'HTML', extension: 'html' },
+	{ name: 'Java', extension: 'java' },
+	{ name: 'JavaScript', extension: 'js' },
+	{ name: 'JSON', extension: 'json' },
+	{ name: 'Kotlin', extension: 'kt' },
+	{ name: 'Lisp', extension: 'lisp' },
+	{ name: 'Lua', extension: 'lua' },
+	{ name: 'Markdown', extension: 'md' },
+	{ name: 'Nim', extension: 'nim' },
+	{ name: 'OCaml', extension: 'ml' },
+	{ name: 'PHP', extension: 'php' },
+	{ name: 'Perl', extension: 'pl' },
+	{ name: 'Python', extension: 'py' },
+	{ name: 'Rust', extension: 'rs' },
+	{ name: 'Scala', extension: 'scala' },
+	{ name: 'SQL', extension: 'sql' },
+	{ name: 'Svelte', extension: 'svelte' },
+	{ name: 'Swift', extension: 'swift' },
+	{ name: 'TypeScript', extension: 'ts' },
+	{ name: 'VIM', extension: 'vim' },
+	{ name: 'Web Assembly', extension: 'wasm' },
+	{ name: 'XML', extension: 'xml' },
+	{ name: 'YAML', extension: 'yaml' }
 ];

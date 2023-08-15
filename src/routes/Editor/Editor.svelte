@@ -1,7 +1,8 @@
 <script lang="ts">
-	import WelcomeScreen from './WelcomeScreen.svelte';
 	import { selectedFile } from '../stores';
 	import { getFileExtension, getFileUrl } from '$lib/file';
+	import WelcomeScreen from './WelcomeScreen.svelte';
+	import Code from './Code.svelte';
 
 	$: fileName = $selectedFile?.file.file.name;
 	$: fileExtension = getFileExtension(fileName ?? '');
@@ -38,11 +39,7 @@
 						<br />
 					{/each}
 				</p>
-				<p
-					class="w-full h-full font-mono whitespace-pre-wrap outline-none"
-					bind:innerText={$selectedFile.editedContent}
-					contenteditable
-				/>
+				<Code />
 			</div>
 		{/if}
 	{:else}
