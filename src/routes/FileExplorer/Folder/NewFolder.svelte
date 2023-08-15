@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { clickOutside } from '$lib/click_outside';
+	import { clickOutside } from '$lib/actions/click_outside';
 	import { getFolderIcon, createFolder } from '$lib/folder';
 	import type { TFolder } from '$lib/folder';
 	import { rootFolder, notifications } from '../../stores';

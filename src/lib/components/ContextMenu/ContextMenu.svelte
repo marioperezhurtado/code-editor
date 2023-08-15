@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
-	import { clickOutside } from '$lib/click_outside';
+	import { clickOutside } from '$lib/actions/click_outside';
 </script>
 
 <ul
