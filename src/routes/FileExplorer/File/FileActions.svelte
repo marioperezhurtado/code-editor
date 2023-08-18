@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { rootFolder, selectedFile, notifications } from '../../stores';
+	import { rootFolder, openFiles, notifications } from '../../stores';
 	import { fileClipboard } from '../file_clipboard';
 	import { downloadFile, deleteFile, type TFile } from '$lib/file';
 	import ContextMenu from '$lib/components/ContextMenu/ContextMenu.svelte';
@@ -30,7 +30,7 @@
 
 	async function handleDelete() {
 		try {
-			if ($selectedFile?.file === file) selectedFile.close();
+			openFiles.close(file);
 			await deleteFile(file);
 			rootFolder.refresh();
 		} catch (e) {

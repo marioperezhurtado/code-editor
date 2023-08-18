@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getFileIcon, resolvePathToFile, type TFile } from '$lib/file';
-	import { selectedFile, rootFolder, notifications } from '../../stores';
+	import { selectedFile, rootFolder, openFiles, notifications } from '../../stores';
 	import FileActions from './FileActions.svelte';
 	import RenameFile from './RenameFile.svelte';
 
@@ -21,7 +21,7 @@
 
 	async function handleOpenFile() {
 		try {
-			await selectedFile.open(file);
+			await openFiles.open(file);
 		} catch (e) {
 			notifications.add({
 				title: `The file "${file.file.name}" could not be opened`,
