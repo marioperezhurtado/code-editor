@@ -14,8 +14,7 @@ export function shortcut(node: HTMLElement, params: ShortcutParams) {
 
 	function setHandler() {
 		removeHandler();
-		removeHandler();
-		if (!params) return;
+
 		handler = (e) => {
 			if (
 				!!params.alt != e.altKey ||

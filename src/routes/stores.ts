@@ -14,7 +14,7 @@ type OpenFiles = {
 };
 
 function createOpenFiles() {
-    const { subscribe,set,  update } = writable<OpenFiles>({ files: [], selectedFile: null });
+    const { subscribe, set, update } = writable<OpenFiles>({ files: [], selectedFile: null });
 
     return {
         subscribe,
@@ -67,7 +67,8 @@ function createOpenFiles() {
                 files.selectedFile.content = files.selectedFile.editedContent;
                 return files;
             });
-        }
+        },
+        closeAll: () => set({ files: [], selectedFile: null })
     }
 }
 

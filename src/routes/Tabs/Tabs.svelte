@@ -1,12 +1,27 @@
 <script lang="ts">
 	import { getFileIcon } from '$lib/file';
 	import { openFiles, selectedFile } from '../stores';
+	import { shortcut } from '$lib/actions/shortcut';
 	import Tab from './Tab.svelte';
 	import FilePath from './FilePath.svelte';
 	import GitHubIcon from './GitHubIcon.svelte';
 
 	$: icon = getFileIcon($selectedFile?.file.file.name ?? '');
+
+    function handleCloseSelectedFile() {
+        if (!$selectedFile) return;
+        openFiles.close($selectedFile.file);
+    }
 </script>
+
+<span
+	use:shortcut={{ control: true, key: 'e' }}
+    on:shortcut={handleCloseSelectedFile}
+/>
+<span
+	use:shortcut={{ control: true, key: 'q' }}
+	on:shortcut={openFiles.closeAll}
+/>
 
 <ul class="flex items-center text-sm border-b bg-dark-2 border-b-dark-3">
 	{#if $selectedFile}

@@ -20,7 +20,7 @@
 	}
 </script>
 
-<svelte:window on:contextmenu={handleOpen} />
+<svelte:window on:contextmenu|once={handleOpen} />
 
 <ul
 	bind:this={menu}

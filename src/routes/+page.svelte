@@ -15,7 +15,10 @@
 	}
 </script>
 
-<svelte:window on:contextmenu|preventDefault on:beforeunload|preventDefault={handlePageUnload} />
+<svelte:window
+	on:contextmenu|preventDefault
+	on:beforeunload|preventDefault={handlePageUnload}
+/>
 
 <main class="flex w-screen h-screen bg-dark text-light">
 	<FileExplorer />

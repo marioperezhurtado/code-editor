@@ -10,11 +10,15 @@
 	function handleClose() {
 		openFiles.close(file);
 	}
+
+    function handleCloseAll() {
+        openFiles.closeAll();
+    }
 </script>
 
 {#if isOpen}
 	<ContextMenu on:outclick={() => (isOpen = false)}>
-		<ContextMenuItem title="Close" command="Ctrl + W" on:click={handleClose} />
-		<ContextMenuItem title="Close all" command="Ctrl + K W" />
+		<ContextMenuItem title="Close" command="Ctrl + e" on:click={handleClose} />
+		<ContextMenuItem title="Close all" command="Ctrl + q" on:click={handleCloseAll}/>
 	</ContextMenu>
 {/if}
