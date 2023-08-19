@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { clickOutside } from '$lib/actions/click_outside';
 	import { scale } from 'svelte/transition';
 	import { createEventDispatcher } from 'svelte';
 
@@ -11,12 +10,10 @@
 	export let confirmText: string;
 </script>
 
-<div class="fixed top-0 left-0 w-screen h-screen cursor-pointer bg-dark/70 z-10" />
+<div class="fixed top-0 left-0 w-screen h-screen bg-dark/70 z-10" />
 
 <div
 	in:scale
-	use:clickOutside
-	on:outclick={() => dispatch('cancel')}
 	class="fixed z-20 max-w-md p-4 -translate-x-1/2 rounded-sm shadow-md bottom-1/2 left-1/2 bg-dark-3"
 >
 	<h1 class="mb-5 text-base">{title}</h1>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { selectedFile } from '../stores';
+	import { openFiles, selectedFile } from '../stores';
 	import { getFileExtension } from '$lib/file';
 	import hljs from 'highlight.js';
 	import 'highlight.js/styles/github-dark.css';
@@ -15,10 +15,10 @@
 </script>
 
 <div class="relative w-full">
-	{#if $selectedFile}
+	{#if $openFiles.selectedFile !== null}
 		<p
 			class="block w-full min-h-full font-mono text-transparent whitespace-pre-wrap outline-none caret-white text-dark"
-			bind:innerText={$selectedFile.editedContent}
+			bind:innerText={$openFiles.selectedFile.editedContent}
 			contenteditable
 		/>
 	{/if}

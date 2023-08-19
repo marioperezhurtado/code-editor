@@ -1,13 +1,14 @@
 <script lang="ts">
-	import { rootFolder, selectedFile } from '../stores';
+	import { rootFolder, openFiles, } from '../stores';
 	import { getFileExtension, getFileUrl } from '$lib/file';
 	import WelcomeScreen from './WelcomeScreen.svelte';
 	import EmptyScreen from './EmptyScreen.svelte';
 	import Code from './Code.svelte';
 
-	$: fileName = $selectedFile?.file.file.name;
+    $: selectedFile = $openFiles.selectedFile;
+	$: fileName = selectedFile?.file.file.name;
 	$: fileExtension = getFileExtension(fileName ?? '');
-	$: lineCount = $selectedFile?.content?.split('\n').length ?? 0;
+	$: lineCount = selectedFile?.content?.split('\n').length ?? 0;
 
 	const IMAGE_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
 	const VIDEO_EXTENSIONS = ['mp4', 'webm', 'ogg'];
@@ -19,16 +20,16 @@
 <section class="flex-1 p-4 overflow-y-auto">
 	{#if !$rootFolder}
 		<WelcomeScreen />
-	{:else if !$selectedFile}
+	{:else if !selectedFile}
 		<EmptyScreen />
 	{:else if isImage}
-		{#await getFileUrl($selectedFile.file) then imageUrl}
+		{#await getFileUrl(selectedFile.file) then imageUrl}
 			<div class="flex items-center justify-center w-full h-full">
-				<img src={imageUrl} alt={$selectedFile.file.file.name} class="max-w-full max-h-full" />
+				<img src={imageUrl} alt={selectedFile.file.file.name} class="max-w-full max-h-full" />
 			</div>
 		{/await}
 	{:else if isVideo}
-		{#await getFileUrl($selectedFile.file) then videoUrl}
+		{#await getFileUrl(selectedFile.file) then videoUrl}
 			<div class="flex items-center justify-center w-full h-full">
 				<video src={videoUrl} controls class="max-w-full max-h-full">
 					<track kind="captions" />
