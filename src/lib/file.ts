@@ -9,6 +9,10 @@ export function getFileExtension(fileName: string): string {
 	return fileName.slice(fileName.lastIndexOf('.') + 1);
 }
 
+export function isBrowserSupported(): boolean {
+    return 'showOpenFilePicker' in window;
+}
+
 export function getFileLanguage(fileName: string): (typeof SUPPORTED_LANGUAGES)[number] {
 	const fileExtension = getFileExtension(fileName);
 	const language = SUPPORTED_LANGUAGES.find((lang) => lang.extension === fileExtension);

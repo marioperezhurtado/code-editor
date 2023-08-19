@@ -1,11 +1,22 @@
 <script lang="ts">
-	import Folder from './Folder/Folder.svelte';
+    
 	import { rootFolder, notifications } from '../stores';
 	import { shortcut } from '$lib/actions/shortcut';
+	import Folder from './Folder/Folder.svelte';
+	import { isBrowserSupported } from '$lib/file';
 
 	let isLoading = false;
 
 	async function handleOpenFolder() {
+        if (!isBrowserSupported()) {
+            notifications.add({
+				title: 'Your browser is not supported',
+				description: 'Please use a browser that supports the File System Access API.',
+				type: 'error'
+			});
+			return;
+		}
+
 		try {
 			const dirHandle = await window.showDirectoryPicker();
 			isLoading = true;
