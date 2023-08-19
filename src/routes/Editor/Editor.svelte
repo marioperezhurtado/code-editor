@@ -8,7 +8,7 @@
     $: selectedFile = $openFiles.selectedFile;
 	$: fileName = selectedFile?.file.file.name;
 	$: fileExtension = getFileExtension(fileName ?? '');
-	$: lineCount = selectedFile?.content?.split('\n').length ?? 0;
+	$: lineCount = selectedFile?.editedContent?.split('\n').length ?? 0;
 
 	const IMAGE_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
 	const VIDEO_EXTENSIONS = ['mp4', 'webm', 'ogg'];

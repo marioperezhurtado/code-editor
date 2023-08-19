@@ -9,17 +9,5 @@
 				<span class="text-sm text-light-2">(Ctrl + O)</span>
 			</button>
 		</li>
-		<li>
-			<button>
-				Create file
-				<span class="text-sm text-light-2">(Ctrl + N)</span>
-			</button>
-		</li>
-		<li>
-			<button>
-				Search file
-				<span class="text-sm text-light-2">(Ctrl + F)</span>
-			</button>
-		</li>
 	</ul>
 </div>

@@ -13,7 +13,7 @@
 	let filesToConfirm: OpenFile[] = [];
 
 	function handleCloseAll() {
-		for (const file of $openFiles.files) {
+		for (const file of $openFiles.files.slice().reverse()) {
 			if (file.editedContent === file.content) {
 				openFiles.close(file.file);
 			} else {
@@ -85,7 +85,7 @@
 	{:else}
 		<li class="flex items-center gap-1 px-3 py-2 -mb-px border-r bg-dark border-dark-3">
 			<LogoIcon />
-			<span>Welcome!</span>
+			<span>Code Editor</span>
 		</li>
 	{/if}
 	<li class="ml-auto">

@@ -6,25 +6,46 @@
 
 	$: fileExtension = getFileExtension($selectedFile?.file.file.name ?? '');
 	let highlighted = '';
+	let textarea: HTMLTextAreaElement;
 
-	$: if ($selectedFile?.editedContent) {
+	$: {
 		highlighted = hljs.highlight($selectedFile?.editedContent ?? '', {
 			language: fileExtension
 		}).value;
+	}
+
+	function handleKeyDown(e: KeyboardEvent) {
+		if (!$selectedFile || !$openFiles.selectedFile) return;
+
+		if (e.key === 'Tab') {
+			e.preventDefault();
+
+			// Get position of cursor
+			const { selectionStart: start, selectionEnd: end } = textarea;
+			const startText = $selectedFile.editedContent.slice(0, start);
+			const endText = $selectedFile.editedContent.slice(end);
+			const newTextValue = `${startText}\t${endText}`;
+
+			// Insert tab and move cursor
+			textarea.value = newTextValue;
+			$openFiles.selectedFile.editedContent = newTextValue;
+			textarea.selectionStart = textarea.selectionEnd = start + 1;
+		}
 	}
 </script>
 
 <div class="relative w-full">
 	{#if $openFiles.selectedFile !== null}
-		<p
-			class="block w-full min-h-full font-mono text-transparent whitespace-pre-wrap outline-none caret-white text-dark"
-			bind:innerText={$openFiles.selectedFile.editedContent}
+		<textarea
+			bind:this={textarea}
+			bind:value={$openFiles.selectedFile.editedContent}
+			on:keydown={handleKeyDown}
 			contenteditable
+            class="absolute top-0 w-full h-full overflow-clip bg-transparent
+            text-transparent caret-light outline-none resize-none font-mono"
 		/>
 	{/if}
-	<p
-		class="absolute top-0 left-0 block w-full min-h-full font-mono whitespace-pre-wrap pointer-events-none"
-	>
+	<p class="font-mono whitespace-pre">
 		<!--eslint-disable-next-line svelte/no-at-html-tags-->
 		{@html highlighted}
 	</p>
