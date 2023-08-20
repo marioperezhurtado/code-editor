@@ -37,12 +37,24 @@ function createOpenFiles() {
         set,
         open: async (file: TFile) => {
             update((files) => {
+                // If file is already open, select it
                 if (files.files.some((f) => f.file === file)) {
                     files.selectedFile = files.files.find((f) => f.file === file) || null;
                     return files;
                 }
 
+                // Otherwise, open it
                 readFile(file).then((content) => {
+                    const lastSavedFile = files.files
+                        .slice()
+                        .reverse()
+                        .find((f) => f.content === f.editedContent);
+
+                    // Remove last saved file
+                    if (lastSavedFile) {
+                        files.files = files.files.filter((f) => f !== lastSavedFile);
+                    }
+
                     files.files.push({
                         file,
                         content,

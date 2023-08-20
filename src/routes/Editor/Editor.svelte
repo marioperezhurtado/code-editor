@@ -37,7 +37,7 @@
 			</div>
 		{/await}
 	{:else}
-		<div class="flex h-full gap-6 text-sm">
+		<div class="flex gap-6 text-sm min-h-full">
 			<p class="text-right text-dark-3">
 				{#each Array.from({ length: lineCount }, (_, i) => i + 1) as line}
 					{line}

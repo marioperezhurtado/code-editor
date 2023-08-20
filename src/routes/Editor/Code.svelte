@@ -34,19 +34,19 @@
 	}
 </script>
 
-<div class="relative w-full">
+<div class="relative min-h-full flex-1">
 	{#if $openFiles.selectedFile !== null}
 		<textarea
 			bind:this={textarea}
 			bind:value={$openFiles.selectedFile.editedContent}
 			on:keydown={handleKeyDown}
 			contenteditable
-            class="absolute top-0 w-full h-full overflow-clip bg-transparent
-            text-transparent caret-light outline-none resize-none font-mono"
+			class="h-full w-full bg-transparent absolute top-0
+            text-transparent caret-light outline-none overflow-clip 
+            whitespace-pre-wrap break-all resize-none font-mono"
 		/>
 	{/if}
-	<p class="font-mono whitespace-pre">
-		<!--eslint-disable-next-line svelte/no-at-html-tags-->
-		{@html highlighted}
+	<p class="font-mono whitespace-pre-wrap break-all">
+			{@html highlighted}
 	</p>
 </div>
