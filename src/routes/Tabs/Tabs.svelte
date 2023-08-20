@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { getFileIcon, writeToFile } from '$lib/file';
-	import { openFiles, selectedFile, notifications, type OpenFile } from '../stores';
+	import { openFiles, selectedFile, notifications, draggedFile, type OpenFile } from '../stores';
 	import { shortcut } from '$lib/actions/shortcut';
 	import Modal from '$lib/components/Modal.svelte';
 	import Tab from './Tab.svelte';
 	import FilePath from './FilePath.svelte';
-	import GitHubIcon from './GitHubIcon.svelte';
+	import TabDropzone from './TabDropzone.svelte';
 	import LogoIcon from './LogoIcon.svelte';
 
 	$: icon = getFileIcon($selectedFile?.file.file.name ?? '');
@@ -88,9 +88,8 @@
 			<span>Code Editor</span>
 		</li>
 	{/if}
-	<li class="ml-auto">
-		<GitHubIcon />
-	</li>
+
+	<TabDropzone />
 </ul>
 {#if $selectedFile}
 	<FilePath {icon} />

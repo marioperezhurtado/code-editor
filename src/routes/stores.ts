@@ -63,7 +63,14 @@ function createOpenFiles() {
                     files.selectedFile = files.files[files.files.length - 1];
                     set(files)
                 });
+                return files;
+            });
+        },
+        move: (newIndex: number) => {
+            update((files) => {
+                files.files = files.files.filter((f) => f.file !== files.selectedFile?.file);
 
+                files.files.splice(newIndex, 0, files.selectedFile as OpenFile);
                 return files;
             });
         },
@@ -100,6 +107,16 @@ function createOpenFiles() {
     };
 }
 
+function createDraggedFile() {
+    const { subscribe, set } = writable<TFile | null>(null);
+
+    return {
+        subscribe,
+        drag: (file: TFile) => set(file),
+        drop: () => set(null),
+    };
+}
+
 type Notification = {
     title: string;
     description: string;
@@ -127,4 +144,5 @@ function createNotifications() {
 export const rootFolder = createRootFolder();
 export const openFiles = createOpenFiles();
 export const selectedFile = derived(openFiles, (openFiles) => openFiles.selectedFile);
+export const draggedFile = createDraggedFile();
 export const notifications = createNotifications();
