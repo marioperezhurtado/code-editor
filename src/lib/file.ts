@@ -16,7 +16,7 @@ export function isBrowserSupported(): boolean {
 export function getFileLanguage(fileName: string): (typeof SUPPORTED_LANGUAGES)[number] {
 	const fileExtension = getFileExtension(fileName);
 	const language = SUPPORTED_LANGUAGES.find((lang) => lang.extension === fileExtension);
-	return language ?? { name: 'Plain Text', extension: 'txt' };
+	return language || { name: 'Plain Text', extension: 'txt' };
 }
 
 export async function getFileUrl(file: TFile): Promise<string> {

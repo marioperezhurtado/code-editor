@@ -1,17 +1,17 @@
 <script lang="ts">
-	import { LANGUAGES, language } from '../user_config';
+	import { LOCALES, locale } from '../user_config';
 	import DropdownMenu from '$lib/components/DropdownMenu/DropdownMenu.svelte';
 	import DropdownItem from '$lib/components/DropdownMenu/DropdownItem.svelte';
-	import LanguageIcon from './LanguageIcon.svelte';
+	import LocaleIcon from './LocaleIcon.svelte';
 </script>
 
 <DropdownMenu title="Language">
-	<LanguageIcon slot="trigger" />
+	<LocaleIcon slot="trigger" />
 	<svelte:fragment slot="content">
-		{#each LANGUAGES as lang}
-			<DropdownItem on:click={() => language.set(lang.code)}>
-				{lang.title}
-				{#if $language === lang.code}
+		{#each LOCALES as l}
+			<DropdownItem on:click={() => locale.set(l.code)}>
+				{l.title}
+				{#if $locale === l.code}
 					<div class="w-1 h-1 rounded-full bg-accent" />
 				{/if}
 			</DropdownItem>

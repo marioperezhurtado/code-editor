@@ -11,12 +11,12 @@ export const COLOR_THEMES = [
 ] as const;
 type Theme = (typeof COLOR_THEMES)[number]['code'];
 
-export const LANGUAGES = [
+export const LOCALES = [
 	{ title: 'English', code: 'en' },
 	{ title: 'Español', code: 'es' },
 	{ title: 'Français', code: 'fr' }
 ] as const;
-type Language = (typeof LANGUAGES)[number]['code'];
+type Locale = (typeof LOCALES)[number]['code'];
 
 export const FONT_SIZES = [
 	{ title: '12px', code: '12px' },
@@ -28,5 +28,5 @@ export const FONT_SIZES = [
 type FontSize = (typeof FONT_SIZES)[number]['code'];
 
 export const colorTheme = persisted<Theme>('color-theme', COLOR_THEMES[0].code);
-export const language = persisted<Language>('language', LANGUAGES[0].code);
+export const locale = persisted<Locale>('locale', LOCALES[0].code);
 export const fontSize = persisted<FontSize>('font-size', FONT_SIZES[2].code);

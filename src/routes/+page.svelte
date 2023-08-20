@@ -17,6 +17,19 @@
 
 <svelte:window on:contextmenu|preventDefault on:beforeunload|preventDefault={handlePageUnload} />
 
+<svelte:head>
+	<title>Code Editor</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" />
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</svelte:head>
+
+
 <main class="flex w-screen h-screen bg-dark text-light">
 	<FileExplorer />
 	<div class="flex flex-col w-full h-full">
