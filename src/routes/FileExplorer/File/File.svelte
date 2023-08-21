@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getFileIcon, resolvePathToFile, type TFile } from '$lib/file';
-	import { selectedFile, rootFolder, openFiles, notifications } from '../../stores';
+	import { selectedFile, rootFolder, openFiles, draggedFile, notifications } from '../../stores';
 	import FileActions from './FileActions.svelte';
 	import RenameFile from './RenameFile.svelte';
 
@@ -37,8 +37,11 @@
 {:else}
 	<button
 		on:click={handleOpenFile}
+		on:dragstart={() => draggedFile.drag(file)}
+		on:dragend={draggedFile.drop}
 		on:contextmenu={() => (actionsOpen = !actionsOpen)}
 		title={path}
+		draggable="true"
 		class="flex items-center w-full gap-1 px-1 py-0.5 rounded-sm"
 		class:bg-dark-3={$selectedFile?.file === file}
 	>

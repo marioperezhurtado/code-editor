@@ -38,8 +38,9 @@ function createOpenFiles() {
         open: async (file: TFile) => {
             update((files) => {
                 // If file is already open, select it
-                if (files.files.some((f) => f.file === file)) {
-                    files.selectedFile = files.files.find((f) => f.file === file) || null;
+                const openedFile = files.files.find((f) => f.file === file);
+                if (openedFile) {
+                    files.selectedFile = openedFile;
                     return files;
                 }
 
@@ -66,11 +67,27 @@ function createOpenFiles() {
                 return files;
             });
         },
-        move: (newIndex: number) => {
+        move: (file: TFile, newIndex: number) => {
             update((files) => {
-                files.files = files.files.filter((f) => f.file !== files.selectedFile?.file);
+                // If file is open, move it
+                const openedFile = files.files.find((f) => f.file === file);
+                if (openedFile) {
+                    files.files = files.files.filter((f) => f.file !== file);
+                    files.files.splice(newIndex, 0, openedFile);
+                    files.selectedFile = files.files[newIndex];
+                    return files;
+                }
 
-                files.files.splice(newIndex, 0, files.selectedFile as OpenFile);
+                // Otherwise, open it at index
+                readFile(file).then((content) => {
+                    files.files.splice(newIndex + 1, 0, {
+                        file,
+                        content,
+                        editedContent: content,
+                    });
+                    files.selectedFile = files.files[newIndex + 1];
+                    set(files)
+                });
                 return files;
             });
         },

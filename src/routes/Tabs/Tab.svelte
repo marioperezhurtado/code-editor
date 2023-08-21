@@ -19,10 +19,11 @@
 		});
 	}
 
-    function handleDragLeave(e: DragEvent) {
-        if (e.relatedTarget === null) {
-            openFiles.move($openFiles.files.findIndex((f) => f.file === openFile.file))
-        }
+	function handleDragLeave(e: DragEvent) {
+		if (e.relatedTarget === null && $draggedFile !== null) {
+			const tabIndex = $openFiles.files.findIndex((f) => f.file === openFile.file);
+			openFiles.move($draggedFile, tabIndex);
+		}
 		dragHover = false;
 	}
 
@@ -41,7 +42,7 @@
 		on:contextmenu={() => (actionsOpen = !actionsOpen)}
 		title={path}
 		draggable="true"
-		class="-mb-px flex items-center gap-1 px-3 py-2 pr-2 border-r
+		class="-mb-px flex items-center gap-1.5 px-3 py-2 pr-2 border-r
         border-t-accent border-dark-3 border-b"
 		class:border-t={selected}
 		class:border-b-transparent={selected}
@@ -50,9 +51,9 @@
 	>
 		<img src="/icons/file/{icon}.svg" alt={icon} class="w-4 h-4" draggable="false" />
 		{#if edited}
-			<span>⚫</span>
+			<span>•</span>
 		{/if}
-		<span class="overflow-hidden whitespace-nowrap text-ellipsis">
+		<span class="overflow-hidden whitespace-nowrap text-ellipsis" class:italic={edited}>
 			{openFile.file.file.name}
 		</span>
 		<button on:click|stopPropagation={onClose} class="ml-1 transition rounded-full hover:bg-dark-3">

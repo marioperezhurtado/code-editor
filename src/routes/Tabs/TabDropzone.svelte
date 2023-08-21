@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { openFiles } from '../stores';
+	import { openFiles, draggedFile } from '../stores';
 
 	let dragHover = false;
 
 	function handleDragLeave(e: DragEvent) {
-		if (e.relatedTarget === null) {
-			openFiles.move($openFiles.files.length - 1);
+		if (e.relatedTarget === null && $draggedFile !== null) {
+            const tabIndex = $openFiles.files.length - 1;
+			openFiles.move($draggedFile, tabIndex);
 		}
 		dragHover = false;
 	}
