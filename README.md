@@ -1,5 +1,6 @@
 ## Code Editor
 Local-first web code editor built with Svelte. Inspired by [vscode.dev](https://vscode.dev).
+Live at [code.marioph.com](https://code.marioph.com)
 
 <p>
   <img src="https://img.shields.io/badge/svelte-%23f1413d.svg?style=for-the-badge&logo=svelte&logoColor=white" alt="Svelte"/>
