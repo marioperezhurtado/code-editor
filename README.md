@@ -1,22 +1,33 @@
-# create-svelte
+## Code Editor
+Local-first web code editor built with Svelte. Inspired by [vscode.dev](https://vscode.dev).
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+<p>
+  <img src="https://img.shields.io/badge/svelte-%23f1413d.svg?style=for-the-badge&logo=svelte&logoColor=white" alt="Svelte"/>
+  <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="TailwindCSS"/>
+</p>
 
-## Creating a project
+## Roadmap
+- [ ] Drag and drop inside file explorer
+    - [ ] Files
+    - [ ] Folders
+- [ ] I18n
+- [ ] Custom color themes
+- [ ] Fuzzy find
+- [ ] Vim motions
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Dependencies
+- **Syntax Highlighting:** [Highlight.js](https://github.com/highlightjs/highlight.js)
+
+## Installation
 
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+git clone https://github.com/marioperezhurtado/code-editor.git
+cd code-editor
+npm install
 ```
 
 ## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Once you've created a project and installed dependencies with npm install (or pnpm install or yarn), start a development server:
 
 ```bash
 npm run dev
@@ -32,7 +43,6 @@ To create a production version of your app:
 ```bash
 npm run build
 ```
-
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
