@@ -14,7 +14,6 @@ type Theme = (typeof COLOR_THEMES)[number]['code'];
 export const LOCALES = [
 	{ title: 'English', code: 'en' },
 	{ title: 'Español', code: 'es' },
-	{ title: 'Français', code: 'fr' }
 ] as const;
 type Locale = (typeof LOCALES)[number]['code'];
 

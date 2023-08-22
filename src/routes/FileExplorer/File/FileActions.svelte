@@ -2,6 +2,7 @@
 	import { rootFolder, openFiles, notifications } from '../../stores';
 	import { fileClipboard } from '../file_clipboard';
 	import { downloadFile, deleteFile, type TFile } from '$lib/file';
+	import { t } from '$lib/i18n/translations';
 	import ContextMenu from '$lib/components/ContextMenu/ContextMenu.svelte';
 	import ContextMenuItem from '$lib/components/ContextMenu/ContextMenuItem.svelte';
 	import ContextMenuSeparator from '$lib/components/ContextMenu/ContextMenuSeparator.svelte';
@@ -35,8 +36,8 @@
 			rootFolder.refresh();
 		} catch (e) {
 			notifications.add({
-				title: `The file "${file.file.name}" could not be deleted`,
-				description: 'Try again, or refresh the page.',
+                title: `${$t('files.actions.delete.error.title')} '${file.file.name}'`,
+                description: $t('files.actions.delete.error.description'),
 				type: 'error'
 			});
 		}
@@ -47,14 +48,14 @@
 		try {
 			await downloadFile(file);
 			notifications.add({
-				title: `The file "${file.file.name}" has been downloaded`,
-				description: 'You can find it in your downloads folder.',
+                title: `${$t('files.actions.download.success.title')} '${file.file.name}'`,
+                description: $t('files.actions.download.success.description'),
 				type: 'success'
 			});
 		} catch (e) {
 			notifications.add({
-				title: `The file "${file.file.name}" could not be downloaded`,
-				description: 'It may have been deleted or moved.',
+                title: `${$t('files.actions.download.error.title')} '${file.file.name}'`,
+                description: $t('files.actions.download.error.description'),
 				type: 'error'
 			});
 		}
@@ -64,15 +65,19 @@
 
 {#if isOpen}
 	<ContextMenu on:outclick={handleClose}>
-		<ContextMenuItem title="Copy" command="C" on:click={handleCopy} />
+		<ContextMenuItem title={$t('files.actions.copy.title')} command="C" on:click={handleCopy} />
 
 		<ContextMenuSeparator />
-		<ContextMenuItem title="Download" on:click={handleDownload} />
+		<ContextMenuItem title={$t('files.actions.download.title')} on:click={handleDownload} />
 		<ContextMenuSeparator />
 
-		<ContextMenuItem title="Rename..." command="R" on:click={handleStartRenaming} />
 		<ContextMenuItem
-			title="Delete permanently"
+			title={$t('files.actions.rename.title')}
+			command="R"
+			on:click={handleStartRenaming}
+		/>
+		<ContextMenuItem
+			title={$t('files.actions.delete.title')}
 			command="D"
 			on:click={() => (confirmingDelete = true)}
 		/>
@@ -81,10 +86,10 @@
 			<Modal
 				on:confirm={handleDelete}
 				on:cancel={handleClose}
-				title="Are you sure you want to delete '{file.file.name}' permanently?"
-				description="This action cannot be undone."
-				cancelText="Cancel"
-				confirmText="Delete"
+                title={`${$t('files.actions.delete.confirm.title')} '${file.file.name}'?`}
+                description={$t('files.actions.delete.confirm.description')}
+                cancelText={$t('files.actions.delete.confirm.cancel')}
+                confirmText={$t('files.actions.delete.confirm.confirm')}
 			/>
 		{/if}
 	</ContextMenu>

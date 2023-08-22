@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { resolvePathToFile } from '$lib/file';
 	import { rootFolder, type OpenFile } from '../stores';
+    import { t } from '$lib/i18n/translations';
 	import ContextMenu from '$lib/components/ContextMenu/ContextMenu.svelte';
 	import ContextMenuItem from '$lib/components/ContextMenu/ContextMenuItem.svelte';
 	import ContextMenuSeparator from '$lib/components/ContextMenu/ContextMenuSeparator.svelte';
@@ -33,7 +34,7 @@
 {#if isOpen}
 	<ContextMenu on:outclick={() => (isOpen = false)}>
 		<ContextMenuItem
-			title="Close"
+            title={$t('tabs.actions.close')}
 			command="Ctrl + e"
 			on:click={() => {
 				onClose();
@@ -41,7 +42,7 @@
 			}}
 		/>
 		<ContextMenuItem
-			title="Close all"
+            title={$t('tabs.actions.closeAll')}
 			command="Ctrl + q"
 			on:click={() => {
 				onCloseAll();
@@ -51,7 +52,7 @@
 
 		<ContextMenuSeparator />
 
-		<ContextMenuItem title="Copy path" on:click={handleCopyPath} />
-		<ContextMenuItem title="Copy relative path" on:click={handleCopyRelativePath} />
+		<ContextMenuItem title={$t('tabs.actions.copyPath')} on:click={handleCopyPath} />
+		<ContextMenuItem title={$t('tabs.actions.copyRelativePath')} on:click={handleCopyRelativePath} />
 	</ContextMenu>
 {/if}

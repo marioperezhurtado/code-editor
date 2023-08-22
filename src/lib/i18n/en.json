@@ -1,0 +1,134 @@
+{
+    "welcome": {
+        "title": "Welcome to",
+        "actions": {
+            "openFolder": "Open folder"
+        }
+    },
+    "emptyScreen": {
+        "title": "No file selected",
+        "actions": {
+            "searchFile": "Search file",
+            "createFile": "Create file",
+            "createFolder": "Create folder",
+            "openFolder": "Open folder"
+        }
+    },
+    "explorer": {
+        "title": "Explorer",
+        "noFolder": "No folder opened",
+        "openFolder": {
+            "title": "Open folder",
+            "loading": "Loading files...",
+            "notSupported": {
+                "title": "Your browser is not supported",
+                "description": "Please use a browser that supports the File System Access API, e.g. Chrome, Edge..."
+            },
+            "error": {
+                "title": "The folder could not be opened",
+                "description": "If the problem persists, try refreshing the page."
+            }
+        }
+    },
+    "tabs": {
+        "saveChanges": {
+            "confirm": {
+                "title": "Save changes to file",
+                "description": "Your changes will be lost if you don't save them",
+                "cancel": "Don't save",
+                "confirm": "Save changes"
+            },
+            "error": {
+                "title": "Could not save changes to",
+                "description": "Try again, or refresh the page."
+            }
+        },
+        "actions": {
+            "close": "Close",
+            "closeAll": "Close all",
+            "copyPath": "Copy path",
+            "copyRelativePath": "Copy relative path"
+        }
+    },
+    "files": {
+        "actions": {
+            "copy": {
+                "title": "Copy"
+            },
+            "download": {
+                "title": "Download",
+                "error": {
+                    "title": "Could not download file",
+                    "description": "Try again, or refresh the page."
+                },
+                "success": {
+                    "title": "Downloaded file",
+                    "description": "You can find it in your downloads folder."
+                }
+            },
+            "rename": {
+                "title": "Rename...",
+                "error": {
+                    "title": "Could not rename file",
+                    "description": "Try again, or refresh the page."
+                }
+            },
+            "delete": {
+                "title": "Delete permanently",
+                "confirm": {
+                    "title": "Are you sure you want to delete file",
+                    "description": "This action cannot be undone.",
+                    "cancel": "Cancel",
+                    "confirm": "Delete permanently"
+                },
+                "error": {
+                    "title": "Could not delete file",
+                    "description": "Try again, or refresh the page."
+                }
+            }
+        },
+        "openError": {
+            "title": "Could not open file",
+            "description": "It may have been deleted or moved."
+        },
+        "createError": {
+            "title": "The file could not be created",
+            "description": "Try again, or refresh the page."
+        }
+    },
+    "folders": {
+        "actions": {
+            "createFile": {
+                "title": "New file..."
+            },
+            "createFolder": {
+                "title": "New folder...",
+                "error": {
+                    "title": "The folder could not be created",
+                    "description": "Try again, or refresh the page."
+                }
+            },
+            "delete": {
+                "title": "Delete permanently",
+                "confirm": {
+                    "title": "Are you sure you want to delete folder",
+                    "description": "All its contents will be deleted. This action cannot be undone.",
+                    "cancel": "Cancel",
+                    "confirm": "Delete permanently"
+                },
+                "error": {
+                    "title": "Could not delete folder",
+                    "description": "Try again, or refresh the page."
+                }
+            },
+            "paste": {
+                "title": "Paste",
+                "error" : {
+                    "title": "Could not paste file",
+                    "description": "Try again, or refresh the page."
+                }
+            }
+        }
+    },
+    "unload": "Warning: Unsaved changes will be lost."
+}

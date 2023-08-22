@@ -2,6 +2,7 @@
 	import { clickOutside } from '$lib/actions/click_outside';
 	import { getFileIcon, renameFile, type TFile } from '$lib/file';
 	import { rootFolder, notifications } from '../../stores';
+    import { t } from '$lib/i18n/translations';
 
 	export let file: TFile;
 	export let isOpen: boolean;
@@ -20,8 +21,8 @@
 			rootFolder.refresh();
 		} catch (e) {
 			notifications.add({
-				title: `The file "${file.file.name}" could not be renamed`,
-				description: 'Try again, or refresh the page.',
+                title: `${$t('files.rename.error.title')} '${file.file.name}'`,
+                description: $t('files.rename.error.description'),
 				type: 'error'
 			});
 		}

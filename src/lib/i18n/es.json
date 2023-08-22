@@ -1,0 +1,135 @@
+{
+    "welcome": {
+        "title": "Bienvenido a",
+        "actions": {
+            "openFolder": "Abrir carpeta"
+        }
+    },
+    "emptyScreen": {
+        "title": "Ningún archivo seleccionado",
+        "actions": {
+            "searchFile": "Buscar archivo",
+            "createFile": "Crear archivo",
+            "createFolder": "Crear carpeta",
+            "openFolder": "Abrir carpeta"
+        }
+    },
+    "explorer": {
+        "title": "Explorador",
+        "noFolder": "Ninguna carpeta abierta",
+        "openFolder": {
+            "title": "Abrir carpeta",
+            "loading": "Cargando archivos...",
+            "notSupported": {
+                "title": "Tu navegador no es compatible",
+                "description": "Por favor, utiliza un navegador que soporte la API de accesso al sistema de archivos, p.ej. Chrome, Edge..."
+            },
+            "error": {
+                "title": "No se pudo abrir la carpeta",
+                "description": "Si el problema continúa, intenta recargar la página."
+            }
+        }
+    },
+    "tabs": {
+        "saveChanges": {
+            "confirm": {
+                "title": "Guardar cambios en",
+                "description": "Tus cambios se perderán si no los guardas",
+                "cancel": "No guardar",
+                "confirm": "Guardar cambios"
+            },
+            "error": {
+                "title": "No se pudieron guardar los cambios en",
+                "description": "Inténtalo de nuevo o recarga la página."
+            }
+        },
+        "actions": {
+            "close": "Cerrar",
+            "closeAll": "Cerrar todos",
+            "copyPath": "Copiar ruta",
+            "copyRelativePath": "Copiar ruta relativa"
+        }
+    },
+    "files": {
+        "actions": {
+            "copy": {
+                "title": "Copiar"
+            },
+            "download": {
+                "title": "Descargar",
+                "error": {
+                    "title": "No se pudo descargar el archivo",
+                    "description": "Inténtalo de nuevo o recarga la página."
+                },
+                "success": {
+                    "title": "Descargado",
+                    "description": "Puedes encontrar el archivo en tu carpeta de descargas."
+                }
+            },
+            "rename": {
+                "title": "Renombrar...",
+                "error": {
+                    "title": "No se pudo renombrar el archivo",
+                    "description": "Inténtalo de nuevo o recarga la página."
+                }
+            },
+            "delete": {
+                "title": "Eliminar permanentemente",
+                "confirm": {
+                    "title": "¿Estás seguro de que quieres eliminar permanentemente el archivo",
+                    "description": "Esta acción no se puede deshacer.",
+                    "cancel": "Cancelar",
+                    "confirm": "Eliminar permanentemente"
+                },
+                "error": {
+                    "title": "No se pudo borrar el archivo",
+                    "description": "Inténtalo de nuevo o recarga la página."
+                }
+            }
+        },
+        "openError": {
+            "title": "No se pudo abrir el archivo",
+            "description": "Puede que haya sido eliminado o movido."
+        },
+        "createError": {
+            "title": "No se pudo crear el archivo",
+            "description": "Inténtalo de nuevo o recarga la página."
+        }
+    },
+    "folders": {
+        "actions": {
+            "createFile": {
+                "title": "Nuevo archivo..."
+            },
+            "createFolder": {
+                "title": "Nueva carpeta...",
+                "error": {
+                    "title": "No se pudo crear la carpeta",
+                    "description": "Inténtalo de nuevo o recarga la página."
+                }
+            },
+            "delete": {
+                "title": "Eliminar permanentemente",
+                "confirm": {
+                    "title": "¿Estás seguro de que quieres eliminar la carpeta",
+                    "description": "Todos sus contenidos serán eliminados permanentemente. Esta acción no se puede deshacer.",
+                    "cancel": "Cancelar",
+                    "confirm": "Eliminar permanentemente"
+                },
+                "error": {
+                    "title": "No se pudo eliminar la carpeta",
+                    "description": "Inténtalo de nuevo o recarga la página."
+                }
+            },
+            "paste": {
+                "title": "Pegar",
+                "error" : {
+                    "title": "No se pudo pegar el archivo",
+                    "description": "Inténtalo de nuevo o recarga la página."
+                }
+            }
+        }
+    },
+ 
+    "unload": "Advertencia: Los cambios no guardados se perderán."
+}

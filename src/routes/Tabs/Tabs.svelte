@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { getFileIcon, writeToFile } from '$lib/file';
-	import { openFiles, selectedFile, notifications, draggedFile, type OpenFile } from '../stores';
+	import { openFiles, selectedFile, notifications, type OpenFile } from '../stores';
 	import { shortcut } from '$lib/actions/shortcut';
+    import { t } from '$lib/i18n/translations';
 	import Modal from '$lib/components/Modal.svelte';
 	import Tab from './Tab.svelte';
 	import FilePath from './FilePath.svelte';
@@ -45,8 +46,8 @@
 			openFiles.save();
 		} catch (e) {
 			notifications.add({
-				title: `Could not save changes to '${file.file.file.name}'"`,
-				description: 'Try again, or refresh the page.',
+				title: `${$t('tabs.saveChanges.error.title')} '${file.file.file.name}'"`,
+				description: $t('tabs.saveChanges.error.description'),
 				type: 'error'
 			});
 		}
@@ -65,10 +66,10 @@
 
 {#if filesToConfirm.length > 0}
 	<Modal
-		title="Save changes to file '{filesToConfirm[0].file.file.name}'?"
-		description="Your changes will be lost if you don't save them"
-		cancelText="Don't save"
-		confirmText="Save changes"
+		title={`${$t("tabs.saveChanges.confirm.title")} '${filesToConfirm[0].file.file.name}'?`}
+        description={$t("tabs.saveChanges.confirm.description")}
+        cancelText={$t("tabs.saveChanges.confirm.cancel")}
+        confirmText={$t("tabs.saveChanges.confirm.confirm")}
 		on:cancel={() => handleReset(filesToConfirm[0])}
 		on:confirm={() => {
 			openFiles.close(filesToConfirm[0].file);

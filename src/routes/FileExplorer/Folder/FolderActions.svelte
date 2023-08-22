@@ -3,6 +3,7 @@
 	import { fileClipboard } from '../file_clipboard';
 	import { deleteFolder, type TFolder } from '$lib/folder';
 	import { copyFile } from '$lib/file';
+	import { t } from '$lib/i18n/translations';
 
 	import ContextMenu from '$lib/components/ContextMenu/ContextMenu.svelte';
 	import ContextMenuItem from '$lib/components/ContextMenu/ContextMenuItem.svelte';
@@ -27,10 +28,9 @@
 			fileClipboard.paste();
 			rootFolder.refresh();
 		} catch (e) {
-			console.error(e);
 			notifications.add({
-				title: `The file "${$fileClipboard.file.name}" could not be pasted`,
-				description: 'Try again, or refresh the page.',
+                title: `${$t('files.actions.copy.error.title')} '${$fileClipboard.file.name}'`,
+                description: $t('files.actions.copy.error.description'),
 				type: 'error'
 			});
 		}
@@ -57,8 +57,8 @@
 			rootFolder.refresh();
 		} catch (e) {
 			notifications.add({
-				title: `The folder "${folder.folder.name}" could not be deleted`,
-				description: 'It may have been already deleted or moved.',
+				title: `${$t('folders.actions.delete.error.title')} '${folder.folder.name}'`,
+				description: $t('folders.actions.delete.error.description'),
 				type: 'error'
 			});
 		}
@@ -76,18 +76,30 @@
 {#if isOpen}
 	<ContextMenu on:outclick={() => (isOpen = false)}>
 		{#if $fileClipboard}
-			<ContextMenuItem title="Paste" command="V" on:click={handlePasteFile} />
+			<ContextMenuItem
+				title={$t('folders.actions.paste.title')}
+				command="V"
+				on:click={handlePasteFile}
+			/>
 			<ContextMenuSeparator />
 		{/if}
 
-		<ContextMenuItem title="New file..." command="N" on:click={handleStartCreatingFile} />
-		<ContextMenuItem title="New folder..." command="F" on:click={handleStartCreatingFolder} />
+		<ContextMenuItem
+			title={$t('folders.actions.createFile.title')}
+			command="N"
+			on:click={handleStartCreatingFile}
+		/>
+		<ContextMenuItem
+			title={$t('folders.actions.createFolder.title')}
+			command="F"
+			on:click={handleStartCreatingFolder}
+		/>
 
 		{#if parentFolder}
 			<ContextMenuSeparator />
 
 			<ContextMenuItem
-				title="Delete permanently"
+				title={$t('folders.actions.delete.title')}
 				command="D"
 				on:click={() => (confirmingDelete = true)}
 			/>
@@ -97,11 +109,10 @@
 			<Modal
 				on:confirm={handleDelete}
 				on:cancel={() => (confirmingDelete = false)}
-				title="Are you sure you want to delete '{folder.folder
-					.name}' and all its contents permanently?"
-				description="This action cannot be undone."
-				cancelText="Cancel"
-				confirmText="Delete"
+				title={`${$t('folders.actions.delete.confirm.title')} '${folder.folder.name}'?`}
+				description={$t('folders.actions.delete.confirm.description')}
+				cancelText={$t('folders.actions.delete.confirm.cancel')}
+				confirmText={$t('folders.actions.delete.confirm.confirm')}
 			/>
 		{/if}
 	</ContextMenu>

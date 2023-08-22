@@ -51,7 +51,7 @@
 	>
 		<img src="/icons/file/{icon}.svg" alt={icon} class="w-4 h-4" draggable="false" />
 		{#if edited}
-			<span>•</span>
+			<span>●</span>
 		{/if}
 		<span class="overflow-hidden whitespace-nowrap text-ellipsis" class:italic={edited}>
 			{openFile.file.file.name}

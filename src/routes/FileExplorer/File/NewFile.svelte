@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { clickOutside } from '$lib/actions/click_outside';
 	import { getFileIcon, createFile } from '$lib/file';
-	import type { TFolder } from '$lib/folder';
 	import { rootFolder, notifications } from '../../stores';
+	import { t } from '$lib/i18n/translations';
+	import type { TFolder } from '$lib/folder';
 
 	export let parentFolder: TFolder;
 	export let isOpen: boolean;
@@ -20,8 +21,8 @@
 			rootFolder.refresh();
 		} catch (e) {
 			notifications.add({
-				title: `The file could not be created`,
-				description: 'Try again, or refresh the page.',
+                title: $t('files.createError.title'),
+                description: $t('files.createError.description'),
 				type: 'error'
 			});
 		}

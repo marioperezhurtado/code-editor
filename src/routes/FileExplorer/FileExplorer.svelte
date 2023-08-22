@@ -1,17 +1,17 @@
 <script lang="ts">
-    
 	import { rootFolder, notifications } from '../stores';
 	import { shortcut } from '$lib/actions/shortcut';
-	import Folder from './Folder/Folder.svelte';
 	import { isBrowserSupported } from '$lib/file';
+	import { t } from '$lib/i18n/translations';
+	import Folder from './Folder/Folder.svelte';
 
 	let isLoading = false;
 
 	async function handleOpenFolder() {
-        if (!isBrowserSupported()) {
-            notifications.add({
-				title: 'Your browser is not supported',
-				description: 'Please use a browser that supports the File System Access API.',
+		if (!isBrowserSupported()) {
+			notifications.add({
+				title: $t('explorer.openFolder.notSupported.title'),
+				description: $t('explorer.openFolder.notSupported.description'),
 				type: 'error'
 			});
 			return;
@@ -23,8 +23,8 @@
 			await rootFolder.open(dirHandle);
 		} catch (err) {
 			notifications.add({
-				title: 'The folder could not be opened',
-				description: 'If the problem persists, try refreshing the page.',
+                title: $t('explorer.openFolder.error.title'),
+                description: $t('explorer.openFolder.error.description'),
 				type: 'warning'
 			});
 		}
@@ -37,18 +37,18 @@
 	on:shortcut={handleOpenFolder}
 	class="h-screen p-2 overflow-y-auto border-r bg-dark-2 border-dark-3 min-w-[13rem] w-52"
 >
-	<h1 class="mb-3 text-xs">EXPLORER</h1>
+	<h1 class="mb-3 text-xs uppercase">{$t('explorer.title')}</h1>
 	{#if $rootFolder}
 		<Folder folder={$rootFolder} />
 	{:else if isLoading}
-		<p class="text-sm">Loading...</p>
+		<p class="text-sm">{$t('explorer.openFolder.loading')}</p>
 	{:else}
-		<p class="text-sm">No folder opened</p>
+		<p class="text-sm">{$t('explorer.noFolder')}</p>
 		<button
 			on:click={handleOpenFolder}
 			class="block w-full p-1 mt-3 text-sm rounded-sm bg-accent text-light"
 		>
-			Open folder
+			{$t('explorer.openFolder.title')}
 		</button>
 	{/if}
 </aside>

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { getFileIcon, resolvePathToFile, type TFile } from '$lib/file';
 	import { selectedFile, rootFolder, openFiles, draggedFile, notifications } from '../../stores';
+    import { t } from '$lib/i18n/translations';
 	import FileActions from './FileActions.svelte';
 	import RenameFile from './RenameFile.svelte';
 
@@ -24,8 +25,8 @@
 			await openFiles.open(file);
 		} catch (e) {
 			notifications.add({
-				title: `The file "${file.file.name}" could not be opened`,
-				description: 'It may have been deleted or moved.',
+                title: `${$t('files.openError.title')} '${file.file.name}'`,
+                description: $t('files.openError.description'),
 				type: 'error'
 			});
 		}
