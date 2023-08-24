@@ -45,6 +45,8 @@
         },
         "actions": {
             "close": "Cerrar",
+            "closeOthers": "Cerrar otros",
+            "closeSaved": "Cerrar guardados",
             "closeAll": "Cerrar todos",
             "copyPath": "Copiar ruta",
             "copyRelativePath": "Copiar ruta relativa"

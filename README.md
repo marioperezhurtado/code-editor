@@ -11,7 +11,6 @@ Live at [code.marioph.com](https://code.marioph.com)
 - [ ] Drag and drop inside file explorer
     - [ ] Files
     - [ ] Folders
-- [ ] I18n
 - [ ] Custom color themes
 - [ ] Fuzzy find
 - [ ] Vim motions

@@ -6,6 +6,7 @@
 	export let openFile: OpenFile;
 	export let onClose: () => void;
 	export let onCloseAll: () => void;
+	export let onCloseOthers: () => void;
 
 	let actionsOpen = false;
 	let path = openFile.file.file.name;
@@ -62,4 +63,4 @@
 	</button>
 </li>
 
-<TabActions bind:isOpen={actionsOpen} {openFile} {onClose} {onCloseAll} />
+<TabActions bind:isOpen={actionsOpen} {openFile} {onClose} {onCloseAll} {onCloseOthers} />

@@ -101,6 +101,16 @@ function createOpenFiles() {
                 return files;
             });
         },
+        closeSaved: () => {
+          update((files) => {
+            files.files = files.files.filter((f) => f.content !== f.editedContent);
+
+            if (files.selectedFile && !files.files.includes(files.selectedFile)) { 
+              files.selectedFile = files.files[files.files.length - 1] || null;
+            }
+            return files;
+          })
+        },
         select: (file: TFile) => {
             update((files) => {
                 files.selectedFile = files.files.find((f) => f.file === file) || null;

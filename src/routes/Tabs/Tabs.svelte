@@ -2,7 +2,7 @@
 	import { getFileIcon, writeToFile } from '$lib/file';
 	import { openFiles, selectedFile, notifications, type OpenFile } from '../stores';
 	import { shortcut } from '$lib/actions/shortcut';
-    import { t } from '$lib/i18n/translations';
+	import { t } from '$lib/i18n/translations';
 	import Modal from '$lib/components/Modal.svelte';
 	import Tab from './Tab.svelte';
 	import FilePath from './FilePath.svelte';
@@ -13,8 +13,18 @@
 
 	let filesToConfirm: OpenFile[] = [];
 
-	function handleCloseAll() {
-		for (const file of $openFiles.files.slice().reverse()) {
+	function handleClose(file: OpenFile) {
+		if (file?.editedContent === file?.content) {
+			openFiles.close(file.file);
+			return;
+		}
+		filesToConfirm = [...filesToConfirm, file];
+	}
+
+	function handleCloseOthers(file: OpenFile) {
+		const otherFiles = $openFiles.files.filter((f) => f !== file);
+
+		for (const file of otherFiles.slice().reverse()) {
 			if (file.editedContent === file.content) {
 				openFiles.close(file.file);
 			} else {
@@ -23,12 +33,14 @@
 		}
 	}
 
-	function handleClose(file: OpenFile) {
-		if (file?.editedContent === file?.content) {
-			openFiles.close(file.file);
-			return;
+	function handleCloseAll() {
+		for (const file of $openFiles.files.slice().reverse()) {
+			if (file.editedContent === file.content) {
+				openFiles.close(file.file);
+			} else {
+				filesToConfirm = [...filesToConfirm, file];
+			}
 		}
-		filesToConfirm = [...filesToConfirm, file];
 	}
 
 	function handleReset(file: OpenFile) {
@@ -66,10 +78,10 @@
 
 {#if filesToConfirm.length > 0}
 	<Modal
-		title={`${$t("tabs.saveChanges.confirm.title")} '${filesToConfirm[0].file.file.name}'?`}
-        description={$t("tabs.saveChanges.confirm.description")}
-        cancelText={$t("tabs.saveChanges.confirm.cancel")}
-        confirmText={$t("tabs.saveChanges.confirm.confirm")}
+		title={`${$t('tabs.saveChanges.confirm.title')} '${filesToConfirm[0].file.file.name}'?`}
+		description={$t('tabs.saveChanges.confirm.description')}
+		cancelText={$t('tabs.saveChanges.confirm.cancel')}
+		confirmText={$t('tabs.saveChanges.confirm.confirm')}
 		on:cancel={() => handleReset(filesToConfirm[0])}
 		on:confirm={() => {
 			openFiles.close(filesToConfirm[0].file);
@@ -81,7 +93,12 @@
 <ul class="flex items-center text-sm border-b bg-dark-2 border-b-dark-3">
 	{#if $selectedFile}
 		{#each $openFiles.files as openFile}
-			<Tab {openFile} onClose={() => handleClose(openFile)} onCloseAll={handleCloseAll} />
+			<Tab
+				{openFile}
+				onClose={() => handleClose(openFile)}
+				onCloseAll={handleCloseAll}
+				onCloseOthers={() => handleCloseOthers(openFile)}
+			/>
 		{/each}
 	{:else}
 		<li class="flex items-center gap-1 px-3 py-2 -mb-px border-r bg-dark border-dark-3">
